@@ -1,0 +1,15 @@
+:root {
+  --yellow: #ffe600;
+  --blue: #3483fa;
+  --navy: #183b70;
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --text: #242a35;
+  --muted: #697386;
+  --border: #e5e7eb;
+  --success: #16a34a;
+  --error: #dc2626;
+  --action: #175ebf;
+  --radius: 14px;
+  --shadow: 0 4px 20px #183b7007;
+}
