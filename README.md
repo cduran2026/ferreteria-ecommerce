@@ -27,7 +27,7 @@ npm run format:check
 
 ## Configuración
 
-Copiar `.env.example` a `.env.local` sólo si se desea preparar el cliente Supabase. Usar URL y clave publicable; nunca service-role ni secretos en VITE. Sin variables no se crea cliente. Esta etapa no requiere cuenta Supabase. No existen migraciones ni autenticación. En producción, BrowserRouter requerirá fallback a `index.html`; configurar al preparar Vercel, no ahora.
+Copiar `.env.example` a `.env.local` sólo si se desea preparar el cliente Supabase. Usar URL y clave publicable; nunca service-role ni secretos en VITE. Sin variables no se crea cliente. Esta etapa no requiere cuenta Supabase. Las pantallas no tienen autenticación real; las migraciones de la etapa 02 se validan por separado y no se usan desde React. En producción, BrowserRouter requerirá fallback a `index.html`; configurar al preparar Vercel, no ahora.
 
 ## Estructura y documentación
 
@@ -40,24 +40,18 @@ Copiar `.env.example` a `.env.local` sólo si se desea preparar el cliente Supab
 - [Plan](docs/05_PLAN_DESARROLLO.md)
 - [Diseño](docs/06_GUIA_DISENO.md)
 
-## Publicación privada en GitHub pendiente
+## Repositorio
 
-Git disponible; GitHub CLI no instalado ni accesible en PATH. No fue posible verificar cuenta autenticada, existencia del remoto o publicar. No hay URL remota confirmada. Instalar GitHub CLI desde su distribución oficial e iniciar sesión sin guardar credenciales en este proyecto:
+Repositorio privado: [cduran2026/ferreteria-ecommerce](https://github.com/cduran2026/ferreteria-ecommerce). `origin` ya está configurado. La etapa 01 está publicada en `main`; la etapa 02 se publica para revisión en `feature/database-foundation`, sin fusión ni despliegue automático.
 
-```powershell
-gh auth login
-gh auth status
-$account = gh api user --jq .login
-gh repo view "$account/ferreteria-ecommerce"
-```
+## Etapa 02 · Fundación de base de datos
 
-Si existe, detenerse y revisar su propósito; no sobrescribir. Si devuelve 404 con autenticación/permisos correctos, crear exclusivamente este repositorio:
+Migraciones SQL y RLS listas para revisión en `feature/database-foundation`; las pantallas siguen usando datos demo. No hay Supabase Cloud ni pasarela conectada.
 
 ```powershell
-gh repo create ferreteria-ecommerce --private --source . --remote origin --push
-gh repo view --json url,isPrivate
-git remote -v
-git status --short
+pwsh -NoProfile -File scripts/test-db.ps1
 ```
 
-Si existe otro error (red/permisos), resolverlo antes de crear. No configurar workflows de despliegue. El commit local de esta etapa debe existir antes de `--push`.
+Requiere Docker Desktop y PowerShell 7. La prueba crea y elimina su propio PostgreSQL aislado. No utilizar los fixtures/adaptador local en Cloud. Documentación: [modelo detallado](docs/08_MODELO_DATOS_DETALLADO.md), [permisos RLS](docs/09_SEGURIDAD_RLS.md), [reglas de inventario](docs/10_REGLAS_INVENTARIO.md), [pruebas](docs/11_PRUEBAS_BASE_DATOS.md), [decisiones pendientes](docs/12_DECISIONES_PENDIENTES.md).
+
+El repositorio privado ya se vinculó y publicó en https://github.com/cduran2026/ferreteria-ecommerce después del informe histórico de la etapa 01. No se fusiona esta rama automáticamente.

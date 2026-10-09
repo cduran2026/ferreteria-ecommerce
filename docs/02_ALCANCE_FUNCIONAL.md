@@ -11,3 +11,7 @@
 Excluidos: API/sincronización automática de Mercado Libre, facturación electrónica, contabilidad, POS avanzado, aplicaciones nativas, IA y automatizaciones complejas.
 
 Restricciones actuales: ninguna tabla productiva, migración definitiva, autenticación, pago, inventario real, pedido persistente, integración externa ni despliegue. Las rutas de módulos futuros explican su estado; no representan funcionalidades terminadas. Cualquier ampliación requiere autorización.
+
+## Actualización de etapa 02
+
+El PROMPT 02 autoriza migraciones y pruebas de la fundación de datos sin conectar pantallas, implementar pasarelas ni desplegar Cloud. Ver documentos 08 a 12 para el diseño propuesto; las restricciones de la tabla anterior describen la etapa 01.

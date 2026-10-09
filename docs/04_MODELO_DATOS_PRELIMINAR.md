@@ -1,29 +1,13 @@
-# Modelo de datos preliminar
+# Modelo de datos propuesto · Etapa 02
 
-Propuesta conceptual, no migración ni contrato definitivo.
+La propuesta conceptual del PROMPT 01 se materializa en cinco migraciones versionadas. Se conserva inventario único, unidad base, precios enteros CLP, snapshots e idempotencia. No se conecta React, no se aplica a Cloud y no se despliega.
 
-| Entidad                 | Relación y responsabilidad                                                                                  |
-| ----------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Categoría               | Agrupa productos; slug único                                                                                |
-| Producto                | SKU único, nombre, descripción, categoría, unidad base y estado                                             |
-| Imagen de producto      | Producto 1:N imágenes; orden y texto alternativo                                                            |
-| Presentación            | Producto 1:N; unidad/caja/embalaje, equivalencia entera positiva, código de barras                          |
-| Precio por volumen      | Presentación 1:N escalones; mínimo de cantidad, precio CLP y vigencia                                       |
-| Costo interno           | Acceso administrativo, separado del catálogo público                                                        |
-| Saldo de inventario     | Uno por producto; cantidades físicas y reservadas en unidad base                                            |
-| Movimiento              | Libro de trazabilidad inmutable; producto, cantidad con signo, tipo, canal, fecha, responsable y referencia |
-| Reserva                 | Producto, cantidad base, vencimiento, operación y estado                                                    |
-| Pedido y detalle        | Cliente y presentaciones; snapshots de nombre, equivalencia y precio; canal tienda                          |
-| Venta externa y detalle | Registro manual de Mercado Libre; referencia externa única por canal                                        |
-| Pago y evento           | Pedido, proveedor, ID externo único, monto y estado verificado                                              |
-| Perfil y rol            | Referencia a Auth; capacidades administrativas verificadas en servidor                                      |
+El detalle vigente está en [08_MODELO_DATOS_DETALLADO.md](08_MODELO_DATOS_DETALLADO.md); permisos en [09_SEGURIDAD_RLS.md](09_SEGURIDAD_RLS.md) y operaciones en [10_REGLAS_INVENTARIO.md](10_REGLAS_INVENTARIO.md).
 
-## Invariantes
+Se proponen 20 tablas: catálogo (5), identidad (2), inventario/movimientos (2), proveedores/recepciones/costos (4), pedidos/detalles (2), ventas externas/detalles (2), reservas (1), pagos/eventos (2).
 
-Cantidad base = cantidad de presentaciones × equivalencia. Ejemplo: 3 cajas de 100 tornillos = 300 tornillos. Todos los canales afectan el mismo saldo; no se crean existencias separadas por canal. Disponible = físico menos reservado. Ninguna operación puede dejar disponible negativo.
+Cambios justificados respecto del concepto inicial: costos en `receipt_item_costs` para aislarlos incluso del operador; funciones internas en `app_private` sin ejecución pública; bucket privado con lectura aprobada para evitar filtración de borradores; mínimos de precio con intervalos excluyentes; TTL propuesto de 15 minutos y pago tardío en revisión, sin reasignación automática.
 
-Precios se expresarán como pesos enteros CLP; definir política de IVA, redondeo, minorista/mayorista y vigencia antes del esquema definitivo. El servidor determinará el escalón aplicable y calculará el total, conservando snapshot en el detalle. No confiar en cálculos del frontend.
+Disponible = físico − reservado, calculado en PostgreSQL. Las presentaciones usan equivalencias enteras positivas. Pedidos, recepciones y ventas conservan equivalencias; los pedidos también conservan nombres, precio y total. La unidad base de un producto utilizado no puede cambiarse.
 
-Registro de movimiento, saldo, reserva y operación se actualizarán en la misma transacción con bloqueo del producto. Las reservas se consumen una única vez al confirmar la venta o se liberan al expirar/cancelar. El flujo definitivo de pagos decidirá cuándo reservar y cuándo descontar físico. Reintentos concurrentes de webhook utilizarán clave idempotente y una transición de estado válida; pago tardío sin reserva disponible requiere resolución explícita.
-
-Movimientos no se borran ni reescriben: errores se corrigen mediante movimientos compensatorios. Referencias únicas impiden registrar dos veces una venta externa. Las políticas RLS y funciones limitarán lectura/escritura según propietario y rol. Probar concurrencia, pagos repetidos, cancelaciones, reserva expirada y reversas antes de producción.
+IVA incluido/neto, TTL definitivo, devoluciones parciales y aprobación de ingresos siguen pendientes. Las decisiones técnicas están propuestas para revisión, no representan aprobación de política comercial.

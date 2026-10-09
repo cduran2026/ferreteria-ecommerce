@@ -1,0 +1,89 @@
+PostgreSQL 17.11 · Etapa 02 · 2026-10-09
+85 comprobaciones aprobadas: 78 SQL + 4 controles de denegación entre migraciones + 3 escenarios de concurrencia.
+
+PASS: denegación de acceso tras 20261009000100_catalog.sql, antes de grants finales.
+PASS: denegación de acceso tras 20261009000200_identity.sql, antes de grants finales.
+PASS: denegación de acceso tras 20261009000300_operations.sql, antes de grants finales.
+PASS: denegación de acceso tras 20261009000400_transactions.sql, antes de grants finales.
+PASS: SKU duplicado
+PASS: Categoría inexistente
+PASS: Categoría autorreferente
+PASS: Equivalencia cero
+PASS: Barcode duplicado
+PASS: Mínimo cero
+PASS: Precio negativo
+PASS: Vigencia ambigua
+PASS: Vigencia inversa
+PASS: Escalón 1 a 9
+PASS: Escalón 10 a 49
+PASS: Escalón 50+
+PASS: Precio fuera de vigencia
+PASS: Ciclo indirecto de categorías
+PASS: Recepción borrador sin stock
+PASS: Ingreso 20 cajas = 500 unidades
+PASS: Confirmación recepción idempotente
+PASS: Un movimiento recepción
+PASS: Venta unidad/caja/embalaje descuenta 151
+PASS: Venta externa duplicada no descuenta
+PASS: Referencia externa con payload diferente
+PASS: Venta externa no deja negativo
+PASS: Rollback venta sin disponibilidad
+PASS: Ajuste positivo
+PASS: Ajuste negativo
+PASS: Ajuste no deja negativo
+PASS: Compensación auditable
+PASS: Compensación repetida no duplica
+PASS: Administrador sin escritura directa saldos
+PASS: Sin CRUD movimientos
+PASS: Unidad base en uso inmutable
+PASS: Protección último administrador
+PASS: Precio servidor ignora frontend
+PASS: Snapshot precio y equivalencia
+PASS: Reserva sin disponibilidad
+PASS: Creación pedido idempotente
+PASS: Cliente sin costos internos
+PASS: Cliente sin movimientos
+PASS: Cliente sin función privilegiada
+PASS: Navegador no confirma pagos
+PASS: Cliente sin pedidos ajenos
+PASS: Cliente sin detalles ajenos
+PASS: Cliente no cancela pedido ajeno
+PASS: Operador sin costos
+PASS: Operador no administra roles
+PASS: Sin autoasignación directa roles
+PASS: Inventario único reserva y canal externo
+PASS: Libro inmutable incluso propietario SQL
+PASS: Catálogo público excluye productos y categorías inactivos
+PASS: Precios de categorías inactivas ocultos
+PASS: Imágenes sólo aprobadas
+PASS: Storage sólo aprobado
+PASS: Anónimo sin costos
+PASS: Anónimo sin pedidos
+PASS: Anónimo no escribe inventario
+PASS: Anónimo no ejecuta RPC
+PASS: Helper interno no expuesto
+PASS: Evento duplicado idempotente
+PASS: Transición inválida pago
+PASS: Monto incorrecto
+PASS: Venta tienda consume reserva una vez
+PASS: Confirmación repetida sin descuento duplicado
+PASS: Evento repetido no duplica registro
+PASS: Pedido vacío inválido
+PASS: Cantidad cero inválida
+PASS: Presentación duplicada inválida
+PASS: Cancelación libera una vez
+PASS: Pago tardío queda revisión
+PASS: Pago tardío libera sin descuento
+PASS: Lote expira reservas
+PASS: Expiración repetida idempotente
+PASS: Rechazo pago libera reserva
+PASS: Definers con search_path vacío
+PASS: RLS en todas las tablas
+PASS: Devolución repone 151 unidades
+PASS: Devolución conserva movimiento original
+PASS: Operador registra ingreso autorizado
+PASS: Operador no escribe costos
+PASS: dos sesiones simultáneas reservan 4 de 5; una confirma y la otra revierte sin sobreventa.
+PASS: confirmaciones simultáneas del mismo evento generan un único movimiento y evento.
+PASS: reserva vencida durante espera de bloqueo no descuenta stock y requiere revisión.
+BASE DE DATOS: migraciones, integridad, RLS y concurrencia completadas.

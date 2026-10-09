@@ -22,3 +22,7 @@ El administrador demo es público y sólo contiene datos ficticios. El router no
 Sólo URL y clave publicable pueden aparecer en variables `VITE_*`. Claves service-role, secretos de pagos y credenciales privadas pertenecen exclusivamente al backend. `.env` se excluye de Git. Sin variables, Supabase es `null`; las pantallas no importan ni llaman al cliente. Producción requiere HTTPS, RLS probada, separación de ambientes, validación de entradas, monitoreo y revisión de seguridad.
 
 Operaciones críticas futuras: funciones transaccionales PostgreSQL para reservas/descuentos, bloqueo de filas y restricciones de integridad, permisos mínimos e idempotencia. Edge Functions validarán firmas de pagos y delegarán una única transacción de negocio. Errores esperados usarán códigos de dominio; detalles privados quedarán en logs backend, sin exponerlos al usuario.
+
+## Fundación de datos · Etapa 02
+
+Se agregan cinco migraciones SQL y pruebas sobre PostgreSQL aislado. Las tablas habilitan RLS y revocan acceso desde su creación; la última migración concede políticas/grants específicos. RPC críticas operan transaccionalmente y helpers viven en app_private. React conserva íntegramente sus datos demo. Ver documentos 08 a 12 para entidades, seguridad, reglas, resultados y decisiones pendientes.
