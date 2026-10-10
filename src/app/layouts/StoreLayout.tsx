@@ -1,70 +1,169 @@
+import { useRef } from 'react'
 import { Form, Link, NavLink, Outlet } from 'react-router-dom'
 import { categories } from '../../services/catalog'
 import { Input, Button } from '../../components/ui'
-export function StoreLayout() {
+import { Icon } from '../../components/store/Icon'
+import { CartProvider } from '../../features/cart/Provider'
+import { useCart } from '../../features/cart/useCart'
+function Header() {
+  const { lines, message } = useCart()
+  const menu = useRef<HTMLDetailsElement>(null)
+  const count = lines.reduce((n, l) => n + l.quantity, 0)
   return (
     <>
-      <a href="#main" className="skip">
-        Saltar al contenido
-      </a>
-      <div className="demo-strip">
-        PROTOTIPO · Datos e interacciones de demostración · Sin compras reales
+      <div className="sf-demo-bar">
+        <span className="sf-demo-dot" />
+        Tienda de demostración · Productos, precios e imágenes ilustrativos
       </div>
-      <header className="store-header">
-        <div className="container header-row">
-          <Link className="brand" to="/">
-            <span className="brand-mark">
-              AS<span>↗</span>
+      <header className="sf-header">
+        <div className="sf-container sf-header-main">
+          <Link className="sf-brand" to="/" aria-label="All Store, inicio">
+            <span className="sf-brand-symbol">
+              a<span>↗</span>
             </span>
             <span>
-              ALL STORE<small>FERRETERÍA · CHILE</small>
+              all store<small>FERRETERÍA · CHILE</small>
             </span>
           </Link>
-          <Form action="/catalogo" className="search" role="search">
+          <Form action="/catalogo" className="sf-search" role="search">
+            <Icon name="search" />
             <Input
               name="q"
               aria-label="Buscar productos"
-              placeholder="¿Qué necesitas para tu próximo proyecto?"
+              placeholder="Busca herramientas, materiales y más…"
             />
-            <Button type="submit" aria-label="Buscar">
-              ⌕
-            </Button>
+            <Button type="submit">Buscar</Button>
           </Form>
-          <Link className="cart-link" to="/carrito">
-            Carrito <span>Demo</span>
-          </Link>
-        </div>
-        <nav className="container store-nav" aria-label="Tienda">
-          <NavLink to="/" end>
-            Inicio
-          </NavLink>
-          <NavLink to="/catalogo">Todos los productos</NavLink>
-          {categories.map((c) => (
-            <Link key={c} to={`/catalogo?categoria=${encodeURIComponent(c)}`}>
-              {c}
+          <div className="sf-header-actions">
+            <button
+              className="sf-account"
+              disabled
+              title="Cuenta disponible en una etapa futura"
+            >
+              <Icon name="user" />
+              <span>
+                Mi cuenta<small>Próximamente</small>
+              </span>
+            </button>
+            <Link
+              className="sf-cart-link"
+              to="/carrito"
+              aria-label={`Carrito de demostración, ${count} presentaciones`}
+            >
+              <Icon name="cart" />
+              <span>Carrito</span>
+              <span className="sf-cart-count">{count}</span>
             </Link>
-          ))}
-          <Link className="admin-link" to="/admin">
-            Administración demo ↗
-          </Link>
-        </nav>
-      </header>
-      <main id="main">
-        <Outlet />
-      </main>
-      <footer>
-        <div className="container footer-row">
-          <div>
-            <strong>Ferretería All Store Chile</strong>
-            <p>Una nueva tienda para construir tus proyectos.</p>
           </div>
-          <p>
-            Identidad provisional · Etapa 01
-            <br />
-            Catálogo ilustrativo, sin venta ni pagos habilitados.
-          </p>
         </div>
-      </footer>
+        <div className="sf-nav-border">
+          <div className="sf-container sf-nav-row">
+            <details ref={menu} className="sf-category-menu">
+              <summary>
+                <Icon name="menu" />
+                Categorías
+                <Icon name="chevron" />
+              </summary>
+              <nav aria-label="Menú de categorías">
+                {categories.map((c) => (
+                  <Link
+                    key={c}
+                    to={`/catalogo?categoria=${encodeURIComponent(c)}`}
+                    onClick={() => {
+                      if (menu.current) menu.current.open = false
+                    }}
+                  >
+                    {c}
+                  </Link>
+                ))}
+                <Link
+                  to="/catalogo"
+                  onClick={() => {
+                    if (menu.current) menu.current.open = false
+                  }}
+                >
+                  Todo el catálogo
+                </Link>
+              </nav>
+            </details>
+            <nav className="sf-main-nav" aria-label="Tienda">
+              <NavLink to="/" end>
+                Inicio
+              </NavLink>
+              <NavLink to="/catalogo">Todos los productos</NavLink>
+              {categories.map((c) => (
+                <Link
+                  className="sf-category-nav"
+                  key={c}
+                  to={`/catalogo?categoria=${encodeURIComponent(c)}`}
+                >
+                  {c}
+                </Link>
+              ))}
+            </nav>
+            <Link className="sf-wholesale-link" to="/catalogo?mayorista=1">
+              <Icon name="box" />
+              Comprar por mayor
+            </Link>
+          </div>
+        </div>
+      </header>
+      <div className="sf-live-message" role="status" aria-live="polite">
+        {message}
+      </div>
     </>
+  )
+}
+export function StoreLayout() {
+  return (
+    <CartProvider>
+      <div className="storefront">
+        <a href="#main" className="skip">
+          Saltar al contenido
+        </a>
+        <Header />
+        <main id="main">
+          <Outlet />
+        </main>
+        <footer className="sf-footer">
+          <div className="sf-container sf-footer-grid">
+            <div>
+              <Link className="sf-brand" to="/">
+                <span className="sf-brand-symbol">
+                  a<span>↗</span>
+                </span>
+                <span>
+                  all store<small>FERRETERÍA · CHILE</small>
+                </span>
+              </Link>
+              <p>
+                Soluciones para tus proyectos.
+                <br />
+                Al detalle y por mayor.
+              </p>
+            </div>
+            <div>
+              <h3>Explora</h3>
+              <Link to="/catalogo">Todos los productos</Link>
+              <Link to="/catalogo?mayorista=1">Compra por volumen</Link>
+              <Link to="/carrito">Carrito de demostración</Link>
+            </div>
+            <div>
+              <h3>Sobre esta tienda</h3>
+              <p>
+                Identidad provisional y catálogo ficticio.
+                <br />
+                Sin pagos, pedidos ni despacho habilitados.
+              </p>
+              <Link to="/admin">Administración demo ↗</Link>
+            </div>
+          </div>
+          <div className="sf-container sf-footer-bottom">
+            <span>Ferretería All Store Chile · Diseño en revisión</span>
+            <span>Una experiencia simple, desde el primer clic.</span>
+          </div>
+        </footer>
+      </div>
+    </CartProvider>
   )
 }

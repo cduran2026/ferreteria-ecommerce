@@ -1,3 +1,4 @@
+import { CartPage } from '../../features/cart/CartPage'
 import { RouteError } from '../../components/ui/RouteError'
 import { createBrowserRouter, Link } from 'react-router-dom'
 import { StoreLayout } from '../layouts/StoreLayout'
@@ -23,14 +24,7 @@ export const router = createBrowserRouter([
       { path: '/producto/:id', element: <ProductPage /> },
       {
         path: '/carrito',
-        element: (
-          <div className="container section">
-            <EmptyState>
-              Carrito demostrativo. Las compras estarán disponibles en una etapa
-              posterior. <Link to="/catalogo">Explorar catálogo</Link>
-            </EmptyState>
-          </div>
-        ),
+        element: <CartPage />,
       },
       {
         path: '*',

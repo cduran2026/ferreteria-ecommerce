@@ -1,8 +1,13 @@
+export interface PriceTier {
+  minQuantity: number
+  price: number
+}
 export interface Presentation {
   id: string
   label: string
   baseUnits: number
   price: number
+  tiers?: PriceTier[]
 }
 export interface Product {
   id: string
@@ -13,4 +18,6 @@ export interface Product {
   stock: number
   description: string
   presentations: Presentation[]
+  brand?: string
+  featured?: boolean
 }

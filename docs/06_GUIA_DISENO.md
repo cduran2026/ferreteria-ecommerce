@@ -23,3 +23,7 @@ Primitivas: Button, Input, Select, Card, Badge, Modal con dialog nativo, Table c
 Tarjetas priorizan imagen, nombre, precio CLP, presentación y acceso a ficha. Ficha: ilustración principal y zoom, presentación, cantidad, disponibilidad y acciones explícitamente demo; descripción secundaria. Las ilustraciones SVG locales son propias y temporales: reemplazarlas por fotografías aprobadas y una galería real antes de publicar.
 
 Responsive: grids de 4/3 a 2 columnas, ficha apilada, filtros sobre catálogo en móvil; navegación administrativa horizontal en pantallas pequeñas. Inputs etiquetados, enlaces semánticos, navegación por teclado, foco visible, enlace de salto y modal con Escape y foco nativo. No inferir disponibilidad real ni certificaciones de productos desde datos demo.
+
+## Storefront premium (etapa 18)
+
+El encabezado público ahora es blanco; el amarillo se reserva para identidad y pequeños acentos. Los estilos de tienda están aislados en storefront.css. Se incorporan ilustraciones originales de productos ficticios en JPEG, filtros móviles, tarjetas compactas, escalones por presentación y carrito local demostrativo. Se conservan tokens, primitivas y estilos administrativos. Decisiones, reglas, capturas y validaciones en [Rediseño del storefront](18_REDISENO_STOREFRONT.md).

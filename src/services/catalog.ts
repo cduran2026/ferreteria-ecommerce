@@ -5,13 +5,32 @@ export const products: Product[] = [
     sku: 'HER-001',
     name: 'Taladro percutor inalámbrico 20V',
     category: 'Herramientas',
-    image: '/products/drill.svg',
+    image: '/products/drill-demo.jpg',
     stock: 24,
     description:
       'Equipo de ejemplo para perforación y montaje. Incluye batería y cargador. Especificaciones ilustrativas; no corresponde a una oferta comercial.',
     presentations: [
-      { id: 'unidad', label: 'Unidad', baseUnits: 1, price: 69990 },
-      { id: 'caja', label: 'Caja de 4 unidades', baseUnits: 4, price: 259960 },
+      {
+        id: 'unidad',
+        label: 'Unidad',
+        baseUnits: 1,
+        price: 69990,
+        tiers: [
+          { minQuantity: 1, price: 69990 },
+          { minQuantity: 3, price: 64990 },
+          { minQuantity: 6, price: 59990 },
+        ],
+      },
+      {
+        id: 'caja',
+        label: 'Caja de 4 unidades',
+        baseUnits: 4,
+        price: 259960,
+        tiers: [
+          { minQuantity: 1, price: 259960 },
+          { minQuantity: 3, price: 239960 },
+        ],
+      },
     ],
   },
   {
@@ -19,27 +38,53 @@ export const products: Product[] = [
     sku: 'HER-002',
     name: 'Set de herramientas de mano · 12 piezas',
     category: 'Herramientas',
-    image: '/products/tools.svg',
+    image: '/products/tools-demo.jpg',
     stock: 36,
     description: 'Set demostrativo para mantenimiento y reparación.',
-    presentations: [{ id: 'unidad', label: 'Set', baseUnits: 1, price: 24990 }],
+    presentations: [
+      {
+        id: 'unidad',
+        label: 'Set',
+        baseUnits: 1,
+        price: 24990,
+        tiers: [
+          { minQuantity: 1, price: 24990 },
+          { minQuantity: 6, price: 21990 },
+          { minQuantity: 12, price: 19990 },
+        ],
+      },
+    ],
   },
   {
     id: 'tornillos',
     sku: 'FIJ-001',
     name: 'Tornillos para madera 4 × 40 mm',
     category: 'Fijaciones',
-    image: '/products/screws.svg',
+    image: '/products/screws-demo.jpg',
     stock: 2400,
     description:
       'Fijación de ejemplo. El inventario se expresa en tornillos como unidad base.',
     presentations: [
-      { id: 'unidad', label: 'Unidad', baseUnits: 1, price: 90 },
+      {
+        id: 'unidad',
+        label: 'Unidad',
+        baseUnits: 1,
+        price: 90,
+        tiers: [
+          { minQuantity: 1, price: 90 },
+          { minQuantity: 10, price: 80 },
+          { minQuantity: 50, price: 70 },
+        ],
+      },
       {
         id: 'caja',
         label: 'Caja de 100 unidades',
         baseUnits: 100,
         price: 6990,
+        tiers: [
+          { minQuantity: 1, price: 6990 },
+          { minQuantity: 10, price: 5990 },
+        ],
       },
     ],
   },
@@ -48,17 +93,31 @@ export const products: Product[] = [
     sku: 'SEG-001',
     name: 'Guantes de trabajo con recubrimiento',
     category: 'Seguridad',
-    image: '/products/gloves.svg',
+    image: '/products/gloves-demo.jpg',
     stock: 8,
     description:
       'Guantes ilustrativos. No constituyen una certificación de protección.',
     presentations: [
-      { id: 'unidad', label: 'Par', baseUnits: 1, price: 3990 },
+      {
+        id: 'unidad',
+        label: 'Par',
+        baseUnits: 1,
+        price: 3990,
+        tiers: [
+          { minQuantity: 1, price: 3990 },
+          { minQuantity: 6, price: 3690 },
+          { minQuantity: 12, price: 3290 },
+        ],
+      },
       {
         id: 'embalaje',
         label: 'Embalaje de 12 pares',
         baseUnits: 12,
         price: 39900,
+        tiers: [
+          { minQuantity: 1, price: 39900 },
+          { minQuantity: 3, price: 36900 },
+        ],
       },
     ],
   },
@@ -77,9 +136,10 @@ export function filterProducts(
 ) {
   return products.filter(
     (p) =>
-      p.name
+      [p.name, p.sku, p.brand ?? '']
+        .join(' ')
         .toLocaleLowerCase('es-CL')
-        .includes(query.toLocaleLowerCase('es-CL')) &&
+        .includes(query.trim().toLocaleLowerCase('es-CL')) &&
       (!category || p.category === category) &&
       p.presentations[0].price <= maxPrice,
   )
@@ -92,5 +152,8 @@ export function baseQuantity(quantity: number, units: number) {
     units < 1
   )
     throw new Error('Cantidad y equivalencia deben ser enteros positivos')
-  return quantity * units
+  const result = quantity * units
+  if (!Number.isSafeInteger(result))
+    throw new Error('Cantidad fuera del rango permitido')
+  return result
 }

@@ -1,0 +1,326 @@
+[
+  {
+    "width": 360,
+    "path": "/",
+    "client": 345,
+    "content": 345,
+    "heading": "Todo para tus proyectos,en un solo lugar.",
+    "overflow": false,
+    "viewport": 360
+  },
+  {
+    "width": 360,
+    "path": "/catalogo",
+    "client": 345,
+    "content": 345,
+    "heading": "Encuentra lo que necesitas",
+    "overflow": false,
+    "viewport": 360
+  },
+  {
+    "width": 360,
+    "path": "/producto/taladro",
+    "client": 345,
+    "content": 345,
+    "heading": "Taladro percutor inalámbrico 20V",
+    "overflow": false,
+    "viewport": 360
+  },
+  {
+    "width": 360,
+    "path": "/carrito",
+    "client": 345,
+    "content": 345,
+    "heading": "Tu carrito",
+    "overflow": false,
+    "viewport": 360
+  },
+  {
+    "width": 360,
+    "path": "/admin",
+    "client": 345,
+    "content": 345,
+    "heading": "Dashboard",
+    "overflow": false,
+    "viewport": 360
+  },
+  {
+    "width": 360,
+    "path": "/admin/inventario",
+    "client": 345,
+    "content": 345,
+    "heading": "Inventario",
+    "overflow": false,
+    "viewport": 360
+  },
+  {
+    "width": 390,
+    "path": "/",
+    "client": 375,
+    "content": 375,
+    "heading": "Todo para tus proyectos,en un solo lugar.",
+    "overflow": false,
+    "viewport": 390
+  },
+  {
+    "width": 390,
+    "path": "/catalogo",
+    "client": 375,
+    "content": 375,
+    "heading": "Encuentra lo que necesitas",
+    "overflow": false,
+    "viewport": 390
+  },
+  {
+    "width": 390,
+    "path": "/producto/taladro",
+    "client": 375,
+    "content": 375,
+    "heading": "Taladro percutor inalámbrico 20V",
+    "overflow": false,
+    "viewport": 390
+  },
+  {
+    "width": 390,
+    "path": "/carrito",
+    "client": 375,
+    "content": 375,
+    "heading": "Tu carrito",
+    "overflow": false,
+    "viewport": 390
+  },
+  {
+    "width": 390,
+    "path": "/admin",
+    "client": 375,
+    "content": 375,
+    "heading": "Dashboard",
+    "overflow": false,
+    "viewport": 390
+  },
+  {
+    "width": 390,
+    "path": "/admin/inventario",
+    "client": 375,
+    "content": 375,
+    "heading": "Inventario",
+    "overflow": false,
+    "viewport": 390
+  },
+  {
+    "width": 430,
+    "path": "/",
+    "client": 415,
+    "content": 415,
+    "heading": "Todo para tus proyectos,en un solo lugar.",
+    "overflow": false,
+    "viewport": 430
+  },
+  {
+    "width": 430,
+    "path": "/catalogo",
+    "client": 415,
+    "content": 415,
+    "heading": "Encuentra lo que necesitas",
+    "overflow": false,
+    "viewport": 430
+  },
+  {
+    "width": 430,
+    "path": "/producto/taladro",
+    "client": 415,
+    "content": 415,
+    "heading": "Taladro percutor inalámbrico 20V",
+    "overflow": false,
+    "viewport": 430
+  },
+  {
+    "width": 430,
+    "path": "/carrito",
+    "client": 415,
+    "content": 415,
+    "heading": "Tu carrito",
+    "overflow": false,
+    "viewport": 430
+  },
+  {
+    "width": 430,
+    "path": "/admin",
+    "client": 415,
+    "content": 415,
+    "heading": "Dashboard",
+    "overflow": false,
+    "viewport": 430
+  },
+  {
+    "width": 430,
+    "path": "/admin/inventario",
+    "client": 415,
+    "content": 415,
+    "heading": "Inventario",
+    "overflow": false,
+    "viewport": 430
+  },
+  {
+    "width": 768,
+    "path": "/",
+    "client": 753,
+    "content": 753,
+    "heading": "Todo para tus proyectos,en un solo lugar.",
+    "overflow": false,
+    "viewport": 768
+  },
+  {
+    "width": 768,
+    "path": "/catalogo",
+    "client": 753,
+    "content": 753,
+    "heading": "Encuentra lo que necesitas",
+    "overflow": false,
+    "viewport": 768
+  },
+  {
+    "width": 768,
+    "path": "/producto/taladro",
+    "client": 753,
+    "content": 753,
+    "heading": "Taladro percutor inalámbrico 20V",
+    "overflow": false,
+    "viewport": 768
+  },
+  {
+    "width": 768,
+    "path": "/carrito",
+    "client": 753,
+    "content": 753,
+    "heading": "Tu carrito",
+    "overflow": false,
+    "viewport": 768
+  },
+  {
+    "width": 768,
+    "path": "/admin",
+    "client": 753,
+    "content": 753,
+    "heading": "Dashboard",
+    "overflow": false,
+    "viewport": 768
+  },
+  {
+    "width": 768,
+    "path": "/admin/inventario",
+    "client": 768,
+    "content": 768,
+    "heading": "Inventario",
+    "overflow": false,
+    "viewport": 768
+  },
+  {
+    "width": 1024,
+    "path": "/",
+    "client": 1009,
+    "content": 1009,
+    "heading": "Todo para tus proyectos,en un solo lugar.",
+    "overflow": false,
+    "viewport": 1024
+  },
+  {
+    "width": 1024,
+    "path": "/catalogo",
+    "client": 1009,
+    "content": 1009,
+    "heading": "Encuentra lo que necesitas",
+    "overflow": false,
+    "viewport": 1024
+  },
+  {
+    "width": 1024,
+    "path": "/producto/taladro",
+    "client": 1009,
+    "content": 1009,
+    "heading": "Taladro percutor inalámbrico 20V",
+    "overflow": false,
+    "viewport": 1024
+  },
+  {
+    "width": 1024,
+    "path": "/carrito",
+    "client": 1009,
+    "content": 1009,
+    "heading": "Tu carrito",
+    "overflow": false,
+    "viewport": 1024
+  },
+  {
+    "width": 1024,
+    "path": "/admin",
+    "client": 1009,
+    "content": 1009,
+    "heading": "Dashboard",
+    "overflow": false,
+    "viewport": 1024
+  },
+  {
+    "width": 1024,
+    "path": "/admin/inventario",
+    "client": 1024,
+    "content": 1024,
+    "heading": "Inventario",
+    "overflow": false,
+    "viewport": 1024
+  },
+  {
+    "width": 1440,
+    "path": "/",
+    "client": 1425,
+    "content": 1425,
+    "heading": "Todo para tus proyectos,en un solo lugar.",
+    "overflow": false,
+    "viewport": 1440
+  },
+  {
+    "width": 1440,
+    "path": "/catalogo",
+    "client": 1425,
+    "content": 1425,
+    "heading": "Encuentra lo que necesitas",
+    "overflow": false,
+    "viewport": 1440
+  },
+  {
+    "width": 1440,
+    "path": "/producto/taladro",
+    "client": 1425,
+    "content": 1425,
+    "heading": "Taladro percutor inalámbrico 20V",
+    "overflow": false,
+    "viewport": 1440
+  },
+  {
+    "width": 1440,
+    "path": "/carrito",
+    "client": 1425,
+    "content": 1425,
+    "heading": "Tu carrito",
+    "overflow": false,
+    "viewport": 1440
+  },
+  {
+    "width": 1440,
+    "path": "/admin",
+    "client": 1425,
+    "content": 1425,
+    "heading": "Dashboard",
+    "overflow": false,
+    "viewport": 1440
+  },
+  {
+    "width": 1440,
+    "path": "/admin/inventario",
+    "client": 1440,
+    "content": 1440,
+    "heading": "Inventario",
+    "overflow": false,
+    "viewport": 1440
+  }
+]
