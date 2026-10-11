@@ -1,0 +1,678 @@
+{
+  "pages": [
+    {
+      "actualWidth": 360,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/",
+      "width": 360
+    },
+    {
+      "actualWidth": 360,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/catalogo",
+      "width": 360
+    },
+    {
+      "actualWidth": 360,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/producto/discos-yts-50",
+      "width": 360
+    },
+    {
+      "actualWidth": 360,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/producto/taladro",
+      "width": 360
+    },
+    {
+      "actualWidth": 360,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/carrito",
+      "width": 360
+    },
+    {
+      "actualWidth": 360,
+      "launcher": false,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/admin",
+      "width": 360
+    },
+    {
+      "actualWidth": 360,
+      "launcher": false,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/admin/inventario",
+      "width": 360
+    },
+    {
+      "actualWidth": 390,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/",
+      "width": 390
+    },
+    {
+      "actualWidth": 390,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/catalogo",
+      "width": 390
+    },
+    {
+      "actualWidth": 390,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/producto/discos-yts-50",
+      "width": 390
+    },
+    {
+      "actualWidth": 390,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/producto/taladro",
+      "width": 390
+    },
+    {
+      "actualWidth": 390,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/carrito",
+      "width": 390
+    },
+    {
+      "actualWidth": 390,
+      "launcher": false,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/admin",
+      "width": 390
+    },
+    {
+      "actualWidth": 390,
+      "launcher": false,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/admin/inventario",
+      "width": 390
+    },
+    {
+      "actualWidth": 430,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/",
+      "width": 430
+    },
+    {
+      "actualWidth": 430,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/catalogo",
+      "width": 430
+    },
+    {
+      "actualWidth": 430,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/producto/discos-yts-50",
+      "width": 430
+    },
+    {
+      "actualWidth": 430,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/producto/taladro",
+      "width": 430
+    },
+    {
+      "actualWidth": 430,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/carrito",
+      "width": 430
+    },
+    {
+      "actualWidth": 430,
+      "launcher": false,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/admin",
+      "width": 430
+    },
+    {
+      "actualWidth": 430,
+      "launcher": false,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/admin/inventario",
+      "width": 430
+    },
+    {
+      "actualWidth": 768,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/",
+      "width": 768
+    },
+    {
+      "actualWidth": 768,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/catalogo",
+      "width": 768
+    },
+    {
+      "actualWidth": 768,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/producto/discos-yts-50",
+      "width": 768
+    },
+    {
+      "actualWidth": 768,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/producto/taladro",
+      "width": 768
+    },
+    {
+      "actualWidth": 768,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/carrito",
+      "width": 768
+    },
+    {
+      "actualWidth": 768,
+      "launcher": false,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/admin",
+      "width": 768
+    },
+    {
+      "actualWidth": 768,
+      "launcher": false,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/admin/inventario",
+      "width": 768
+    },
+    {
+      "actualWidth": 1024,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/",
+      "width": 1024
+    },
+    {
+      "actualWidth": 1024,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/catalogo",
+      "width": 1024
+    },
+    {
+      "actualWidth": 1024,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/producto/discos-yts-50",
+      "width": 1024
+    },
+    {
+      "actualWidth": 1024,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/producto/taladro",
+      "width": 1024
+    },
+    {
+      "actualWidth": 1024,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/carrito",
+      "width": 1024
+    },
+    {
+      "actualWidth": 1024,
+      "launcher": false,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/admin",
+      "width": 1024
+    },
+    {
+      "actualWidth": 1024,
+      "launcher": false,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/admin/inventario",
+      "width": 1024
+    },
+    {
+      "actualWidth": 1440,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/",
+      "width": 1440
+    },
+    {
+      "actualWidth": 1440,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/catalogo",
+      "width": 1440
+    },
+    {
+      "actualWidth": 1440,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/producto/discos-yts-50",
+      "width": 1440
+    },
+    {
+      "actualWidth": 1440,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/producto/taladro",
+      "width": 1440
+    },
+    {
+      "actualWidth": 1440,
+      "launcher": true,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/carrito",
+      "width": 1440
+    },
+    {
+      "actualWidth": 1440,
+      "launcher": false,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/admin",
+      "width": 1440
+    },
+    {
+      "actualWidth": 1440,
+      "launcher": false,
+      "overflow": false,
+      "overlaps": [],
+      "path": "/admin/inventario",
+      "width": 1440
+    }
+  ],
+  "panels": [
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "home",
+      "width": 360
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Buscar productos Encuentra lo que necesitas",
+      "width": 360
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Explorar categorías Elige una familia de productos",
+      "width": 360
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Explorar marcas Consulta el catálogo de cada marca",
+      "width": 360
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Comprar por volumen Presentaciones y precios por cantidad",
+      "width": 360
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Consultar mi carrito Revisa tu selección de demostración",
+      "width": 360
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Solicitar ayuda Contacto comercial pendiente",
+      "width": 360
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "home",
+      "width": 390
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Buscar productos Encuentra lo que necesitas",
+      "width": 390
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Explorar categorías Elige una familia de productos",
+      "width": 390
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Explorar marcas Consulta el catálogo de cada marca",
+      "width": 390
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Comprar por volumen Presentaciones y precios por cantidad",
+      "width": 390
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Consultar mi carrito Revisa tu selección de demostración",
+      "width": 390
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Solicitar ayuda Contacto comercial pendiente",
+      "width": 390
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "home",
+      "width": 430
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Buscar productos Encuentra lo que necesitas",
+      "width": 430
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Explorar categorías Elige una familia de productos",
+      "width": 430
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Explorar marcas Consulta el catálogo de cada marca",
+      "width": 430
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Comprar por volumen Presentaciones y precios por cantidad",
+      "width": 430
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Consultar mi carrito Revisa tu selección de demostración",
+      "width": 430
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Solicitar ayuda Contacto comercial pendiente",
+      "width": 430
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "home",
+      "width": 768
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Buscar productos Encuentra lo que necesitas",
+      "width": 768
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Explorar categorías Elige una familia de productos",
+      "width": 768
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Explorar marcas Consulta el catálogo de cada marca",
+      "width": 768
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Comprar por volumen Presentaciones y precios por cantidad",
+      "width": 768
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Consultar mi carrito Revisa tu selección de demostración",
+      "width": 768
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Solicitar ayuda Contacto comercial pendiente",
+      "width": 768
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "home",
+      "width": 1024
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Buscar productos Encuentra lo que necesitas",
+      "width": 1024
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Explorar categorías Elige una familia de productos",
+      "width": 1024
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Explorar marcas Consulta el catálogo de cada marca",
+      "width": 1024
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Comprar por volumen Presentaciones y precios por cantidad",
+      "width": 1024
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Consultar mi carrito Revisa tu selección de demostración",
+      "width": 1024
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Solicitar ayuda Contacto comercial pendiente",
+      "width": 1024
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "home",
+      "width": 1440
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Buscar productos Encuentra lo que necesitas",
+      "width": 1440
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Explorar categorías Elige una familia de productos",
+      "width": 1440
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Explorar marcas Consulta el catálogo de cada marca",
+      "width": 1440
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Comprar por volumen Presentaciones y precios por cantidad",
+      "width": 1440
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Consultar mi carrito Revisa tu selección de demostración",
+      "width": 1440
+    },
+    {
+      "focusInside": true,
+      "insideViewport": true,
+      "overflow": false,
+      "pageOverflow": false,
+      "view": "Solicitar ayuda Contacto comercial pendiente",
+      "width": 1440
+    }
+  ]
+}

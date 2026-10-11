@@ -31,3 +31,7 @@ El encabezado público ahora es blanco; el amarillo se reserva para identidad y 
 ## Evolución comercial — Etapa 1
 
 Banner reducido, discos de corte primero, navegación jerárquica y por marcas. Tarjetas compactas y placeholders neutros hasta recibir fotografías autorizadas; las imágenes sintéticas anteriores dejan de mostrarse. Precios/stock desconocidos se informan y bloquean compra. Los estilos públicos incrementales viven en commercial.css. Ofertas sin datos válidos no muestran porcentajes ni tachados. Ver [Etapa 1](19_ETAPA_1_EVOLUCION_COMERCIAL.md).
+
+## Etapa 1B — Asistencia e iconografía
+
+Extensión del storefront aprobado: iconos por familia, Akilda en navegación, acceso compacto de ayuda y panel guiado voluntario. Avatar de casco temporal, sin reutilizar el póster compuesto. WhatsApp y avatar final requieren aprobación comercial. Movimiento reducido, foco contenido, feedback del carrito conservado. Detalles en [Etapa 1B](20_ETAPA_1B_ASISTENTE_COMPRAS.md).

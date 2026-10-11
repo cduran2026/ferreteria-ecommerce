@@ -7,6 +7,7 @@ import {
 } from '../../services/catalogTaxonomy'
 import { ProductCard } from '../../components/store/ProductCard'
 import { Icon } from '../../components/store/Icon'
+import { categoryIcon } from '../../components/store/categoryIcons'
 import { WholesaleSection } from './WholesaleSection'
 function Shelf({
   id,
@@ -121,7 +122,7 @@ export function HomePage() {
         <div className="sf-category-links">
           {rootCategories.map((c) => (
             <Link key={c.id} to={catalogHref({ category: c.id })}>
-              <Icon name="box" />
+              <Icon name={categoryIcon(c.id)} />
               <strong>{c.name}</strong>
               <Icon name="arrow" />
             </Link>

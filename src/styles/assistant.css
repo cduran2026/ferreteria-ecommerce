@@ -1,0 +1,472 @@
+/* Etapa 1B: extensión de identidad sobre el storefront aprobado. */
+.storefront:has(.sf-assistant) {
+  padding-bottom: calc(84px + env(safe-area-inset-bottom));
+}
+.storefront a,
+.storefront button,
+.storefront input,
+.storefront select {
+  scroll-margin-bottom: 100px;
+}
+.storefront .sf-brand-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.storefront .sf-brand-grid a {
+  gap: 8px;
+}
+.storefront .sf-product-card,
+.storefront .sf-product-actions .button,
+.storefront .sf-category-links a,
+.storefront .sf-brand-grid a {
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.storefront .sf-product-card:focus-within {
+  border-color: #3483fa;
+  box-shadow: 0 0 0 2px #3483fa15;
+}
+.storefront .sf-product-actions .button:not(:disabled):hover {
+  background: #e3edff;
+}
+.storefront .sf-category-links a:hover,
+.storefront .sf-brand-grid a:hover {
+  border-color: #3483fa;
+  background: #f5f9ff;
+}
+.storefront .sf-main-nav a.active {
+  color: #183b70;
+  text-decoration: underline;
+  text-decoration-color: #ffe600;
+  text-underline-offset: 9px;
+  text-decoration-thickness: 3px;
+}
+.storefront .sf-live-message:not(:empty) {
+  bottom: calc(92px + env(safe-area-inset-bottom));
+  box-shadow: 0 6px 20px #183b7020;
+}
+.sf-assistant {
+  position: relative;
+  z-index: 60;
+}
+.sf-assistant-launcher {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: #183b70;
+  background: white;
+  padding: 5px 5px 5px 17px;
+  border: 1px solid #dbe3ee;
+  border-radius: 40px;
+  box-shadow: 0 4px 20px #183b7018;
+  cursor: pointer;
+  max-width: calc(100vw - 32px);
+  transition: box-shadow 150ms ease;
+}
+.sf-assistant-launcher:hover {
+  box-shadow: 0 8px 24px #183b7028;
+  border-color: #3483fa;
+}
+.sf-assistant-welcome {
+  display: grid;
+  gap: 2px;
+  text-align: left;
+}
+.sf-assistant-welcome strong {
+  font-size: 12px;
+}
+.sf-assistant-welcome small {
+  font-size: 10px;
+  color: #697386;
+}
+.sf-assistant-avatar {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  color: #183b70;
+  background: #ffe600;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.sf-assistant-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.storefront .sf-assistant-dialog {
+  position: fixed;
+  inset: auto 20px calc(18px + env(safe-area-inset-bottom)) auto;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #dbe3ee;
+  border-radius: 20px;
+  width: min(400px, calc(100vw - 32px));
+  max-width: calc(100vw - 32px);
+  height: min(640px, calc(100dvh - 32px));
+  max-height: calc(100dvh - 32px);
+  color: #242a35;
+  background: #fff;
+  box-shadow: 0 20px 70px #183b7038;
+  overflow: hidden;
+}
+.storefront .sf-assistant-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  animation: assistant-enter 140ms ease-out;
+}
+.sf-assistant-dialog::backdrop {
+  background: #183b7038;
+}
+.sf-assistant-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  background: #ffe600;
+  flex-shrink: 0;
+}
+.sf-assistant-header > div {
+  flex: 1;
+  min-width: 0;
+}
+.sf-assistant-header h2 {
+  font-size: 17px;
+  margin: 0 0 3px;
+  color: #183b70;
+}
+.sf-assistant-header p {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #183b70;
+}
+.sf-assistant-header .sf-assistant-avatar {
+  background: #fff7a4;
+  width: 42px;
+  height: 42px;
+  flex-basis: 42px;
+}
+.sf-assistant-header button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #183b70;
+  display: grid;
+  place-items: center;
+  min-width: 36px;
+  min-height: 44px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.sf-assistant-header button:hover {
+  background: #183b7012;
+}
+.sf-assistant-body {
+  flex: 1;
+  min-height: 0;
+  padding: 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.sf-assistant-body h3 {
+  font-size: 19px;
+  line-height: 1.3;
+  margin: 0 0 14px;
+  color: #183b70;
+}
+.sf-assistant-body p {
+  font-size: 13px;
+  line-height: 1.65;
+  margin: 0 0 14px;
+}
+.sf-assistant-body .sf-assistant-greeting {
+  padding: 12px 14px;
+  background: #f5f6f8;
+  border-radius: 0 14px 14px 14px;
+}
+.sf-assistant-body .sf-assistant-note {
+  color: #697386;
+  font-size: 11px;
+  line-height: 1.7;
+}
+.sf-assistant-disclaimer {
+  font-size: 10px;
+  padding: 12px 16px;
+  background: #f5f6f8;
+  color: #697386;
+  border-top: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+.sf-assistant-actions,
+.sf-assistant-options {
+  display: grid;
+  gap: 8px;
+}
+.sf-assistant-actions button,
+.sf-assistant-options a,
+.sf-assistant-result {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: white;
+  color: #183b70;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  min-height: 54px;
+}
+.sf-assistant-actions button:hover,
+.sf-assistant-options a:hover,
+.sf-assistant-result:hover {
+  border-color: #3483fa;
+  background: #f5f9ff;
+}
+.sf-assistant-actions span,
+.sf-assistant-options span,
+.sf-assistant-result > span {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+.sf-assistant-actions strong,
+.sf-assistant-options strong,
+.sf-assistant-result strong {
+  font-size: 12px;
+  line-height: 1.4;
+}
+.sf-assistant-actions small,
+.sf-assistant-options small,
+.sf-assistant-result small {
+  color: #697386;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.sf-assistant-actions svg,
+.sf-assistant-options svg,
+.sf-assistant-result > svg {
+  flex-shrink: 0;
+}
+.sf-assistant-options .is-child {
+  margin-left: 12px;
+  width: calc(100% - 12px);
+}
+.sf-assistant-back {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  border: none;
+  color: #183b70;
+  font-size: 12px;
+  padding: 0;
+  margin: 0 0 18px;
+  cursor: pointer;
+  min-height: 44px;
+}
+.sf-assistant-back svg {
+  transform: rotate(180deg);
+}
+.sf-assistant-search label,
+.sf-assistant-contact {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+  color: #183b70;
+  margin-bottom: 10px;
+}
+.sf-assistant-search > div {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.sf-assistant-search input,
+.sf-assistant-contact textarea {
+  border: 1px solid #dbe3ee;
+  background: #fff;
+  color: #242a35;
+  border-radius: 9px;
+  padding: 12px;
+  font: inherit;
+  font-size: 12px;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+}
+.sf-assistant-search input {
+  flex: 1;
+  width: 0;
+}
+.sf-assistant-search .button {
+  min-height: 44px;
+  font-size: 12px;
+  padding: 10px 14px;
+}
+.sf-assistant-contact textarea {
+  resize: vertical;
+  max-height: 150px;
+}
+.sf-assistant-results {
+  display: grid;
+  gap: 10px;
+}
+.sf-assistant-results > p {
+  margin: 0;
+}
+.sf-assistant-result .sf-product-price {
+  font-size: 14px;
+}
+.sf-assistant-result .sf-price-block {
+  margin: 0;
+}
+.sf-assistant-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px;
+  min-height: 46px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid #1d64cc;
+  border-radius: 10px;
+  text-decoration: none;
+  background: #1d64cc;
+  color: white;
+  cursor: pointer;
+  margin: 12px 0;
+}
+.sf-assistant-primary:hover {
+  background: #183b70;
+}
+.sf-assistant-primary:disabled {
+  background: #f5f6f8;
+  border-color: #e5e7eb;
+  color: #697386;
+  cursor: not-allowed;
+}
+.sf-assistant-volume {
+  margin: 16px 0;
+  border-left: 3px solid #ffe600;
+  padding-left: 14px;
+}
+.sf-assistant-volume dt {
+  color: #183b70;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.sf-assistant-volume dd {
+  font-size: 12px;
+  color: #697386;
+  line-height: 1.7;
+  margin: 0 0 15px;
+}
+.sf-assistant-cart {
+  border: 1px solid #e5e7eb;
+  background: #f5f6f8;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 14px;
+  color: #183b70;
+}
+.sf-assistant-cart p {
+  margin: 12px 0 0;
+}
+@keyframes assistant-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 800px) {
+  .storefront .sf-brand-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .storefront .sf-brand-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sf-assistant-launcher {
+    right: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    padding: 5px;
+  }
+  .sf-assistant-welcome {
+    display: none;
+  }
+  .storefront .sf-assistant-dialog {
+    inset: auto 12px calc(12px + env(safe-area-inset-bottom)) 12px;
+    width: calc(100vw - 24px);
+    max-width: calc(100vw - 24px);
+    max-height: calc(100dvh - 24px - env(safe-area-inset-bottom));
+    height: min(660px, calc(100dvh - 24px - env(safe-area-inset-bottom)));
+    border-radius: 16px;
+  }
+  .sf-assistant-body {
+    padding: 16px;
+  }
+  .sf-assistant-header {
+    padding: 12px;
+    gap: 8px;
+  }
+  .sf-assistant-header p {
+    font-size: 10px;
+  }
+  .sf-assistant-header h2 {
+    font-size: 16px;
+  }
+  .sf-assistant-header button {
+    min-width: 32px;
+  }
+  .sf-assistant-disclaimer {
+    padding: 10px 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .storefront *,
+  .storefront *::before,
+  .storefront *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* Acceso compacto: la ayuda no ocupa el ancho de los controles de compra. */
+.sf-assistant-launcher {
+  flex-direction: column;
+  gap: 3px;
+  padding: 5px;
+  width: 60px;
+  border-radius: 32px;
+}
+.sf-assistant-welcome {
+  display: none;
+}
+.sf-assistant-caption {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.3;
+  padding-bottom: 3px;
+}
+@media (min-width: 801px) and (max-width: 1350px) {
+  .storefront:has(.sf-assistant) main .sf-container {
+    padding-right: 104px;
+  }
+}

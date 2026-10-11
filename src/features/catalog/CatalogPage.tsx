@@ -226,7 +226,9 @@ export function CatalogPage() {
               <Icon name="search" width="40" height="40" />
               <h2>No encontramos productos</h2>
               <p>
-                {filters.brand === 'Stanford' || filters.brand === 'Rex'
+                {filters.brand === 'Stanford' ||
+                filters.brand === 'Rex' ||
+                filters.brand === 'Akilda'
                   ? 'Estamos preparando el catálogo de esta marca.'
                   : 'Prueba otra búsqueda o ajusta los filtros.'}
               </p>

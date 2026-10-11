@@ -1,5 +1,11 @@
 import type { Category } from '../types/catalog'
-export const brands = ['Toro Negro', 'YTS', 'Stanford', 'Rex'] as const
+export const brands = [
+  'Toro Negro',
+  'YTS',
+  'Akilda',
+  'Stanford',
+  'Rex',
+] as const
 export const categoryTree: Category[] = [
   {
     id: 'herramientas',

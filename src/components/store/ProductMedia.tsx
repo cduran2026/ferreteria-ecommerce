@@ -1,5 +1,6 @@
 import type { Product } from '../../types/catalog'
 import { Icon } from './Icon'
+import { categoryIcon } from './categoryIcons'
 export function ProductMedia({
   product,
   priority = false,
@@ -21,7 +22,7 @@ export function ProductMedia({
       aria-label={`Fotografía pendiente de ${product.name}`}
     >
       <span className="sf-placeholder-mark">
-        <Icon name="box" width="38" height="38" />
+        <Icon name={categoryIcon(product.categoryId)} width="38" height="38" />
       </span>
       <span className="sf-placeholder-category">{product.category}</span>
       <small>Fotografía pendiente</small>

@@ -1,3 +1,4 @@
+import { StoreAssistant } from '../../components/store/assistant/StoreAssistant'
 import { NavigationMenus } from '../../components/store/NavigationMenus'
 import { Form, Link, NavLink, Outlet } from 'react-router-dom'
 import { catalogHref } from '../../services/catalogTaxonomy'
@@ -70,7 +71,7 @@ function Header() {
               <Link to={catalogHref({ wholesale: true })}>Por volumen</Link>
             </nav>
             <Link className="sf-wholesale-link" to="/catalogo?mayorista=1">
-              <Icon name="box" />
+              <Icon name="stack" />
               Comprar por mayor
             </Link>
           </div>
@@ -131,6 +132,7 @@ export function StoreLayout() {
             <span>Una experiencia simple, desde el primer clic.</span>
           </div>
         </footer>
+        <StoreAssistant />
       </div>
     </CartProvider>
   )
