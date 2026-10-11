@@ -1,116 +1,130 @@
 import { Link } from 'react-router-dom'
-import { products, categories } from '../../services/catalog'
+import { storeProducts } from '../../services/catalog'
+import {
+  brands,
+  rootCategories,
+  catalogHref,
+} from '../../services/catalogTaxonomy'
 import { ProductCard } from '../../components/store/ProductCard'
 import { Icon } from '../../components/store/Icon'
 import { WholesaleSection } from './WholesaleSection'
-const categoryImages: Record<string, string> = {
-  Herramientas: '/products/tools-demo.jpg',
-  Fijaciones: '/products/screws-demo.jpg',
-  Seguridad: '/products/gloves-demo.jpg',
+function Shelf({
+  id,
+  title,
+  subtitle,
+  items,
+  to,
+}: {
+  id: string
+  title: string
+  subtitle: string
+  items: typeof storeProducts
+  to: string
+}) {
+  return (
+    <section className="sf-commercial-shelf" aria-labelledby={id}>
+      <div className="sf-section-heading">
+        <div>
+          <span className="sf-eyebrow">{subtitle}</span>
+          <h2 id={id}>{title}</h2>
+        </div>
+        <Link className="sf-text-link" to={to}>
+          Ver productos
+          <Icon name="arrow" />
+        </Link>
+      </div>
+      <div className="sf-product-grid">
+        {items.map((p) => (
+          <ProductCard key={p.id} product={p} />
+        ))}
+      </div>
+    </section>
+  )
 }
 export function HomePage() {
+  const discs = storeProducts.filter((p) => p.categoryId === 'discos')
+  const featured = storeProducts.filter(
+    (p) => p.dataKind === 'reference' && p.categoryId !== 'discos',
+  )
+  const volume = storeProducts.filter((p) => p.dataKind === 'demo')
   return (
-    <div className="sf-container">
-      <section className="sf-hero">
-        <div className="sf-hero-copy">
+    <div className="sf-container sf-commercial-home">
+      <section className="sf-promo-strip" aria-labelledby="home-heading">
+        <div>
           <span className="sf-eyebrow">
-            <span />
-            HECHO PARA LOS QUE HACEN
+            ALL STORE · AL DETALLE Y POR VOLUMEN
           </span>
-          <h1>
-            Todo para tus proyectos,
-            <br />
-            <em>en un solo lugar.</em>
-          </h1>
-          <p>
-            Herramientas, materiales y productos de ferretería para comprar al
-            detalle o por mayor.
-          </p>
-          <div className="sf-hero-actions">
-            <Link className="button sf-primary" to="/catalogo">
-              Explorar productos
-              <Icon name="arrow" />
-            </Link>
-            <Link className="sf-text-link" to="/catalogo?mayorista=1">
-              Comprar por mayor
-              <Icon name="arrow" />
-            </Link>
-          </div>
-          <div className="sf-hero-foot">
-            <Icon name="check" />
-            Por unidad, caja o embalaje.
-          </div>
+          <h1 id="home-heading">Encuentra lo que mueve tu proyecto.</h1>
         </div>
-        <div className="sf-hero-visual">
-          <img
-            src="/products/drill-demo.jpg"
-            alt="Imagen ilustrativa de taladro inalámbrico azul"
-            width="540"
-            height="540"
-            fetchPriority="high"
-          />
-          <span className="sf-hero-caption">
-            Herramientas para hacerlo posible.
-            <small>Imagen ilustrativa · Producto demo</small>
-          </span>
-        </div>
+        <Link to={catalogHref({ category: 'discos' })} className="button">
+          Explorar discos
+          <Icon name="arrow" />
+        </Link>
       </section>
-      <section className="sf-category-section">
-        <div className="sf-section-heading">
-          <div>
-            <span className="sf-eyebrow">ENCUENTRA LO QUE NECESITAS</span>
-            <h2>¿Qué tienes en mente?</h2>
-          </div>
-          <Link className="sf-text-link" to="/catalogo">
-            Ver catálogo
-            <Icon name="arrow" />
-          </Link>
+      <Shelf
+        id="discs-title"
+        title="Discos de corte"
+        subtitle="Una familia protagonista"
+        items={discs}
+        to={catalogHref({ category: 'discos' })}
+      />
+      <section className="sf-brand-section" aria-label="Explorar por marca">
+        <div>
+          <h2>Tus marcas, más cerca</h2>
+          <p>Explora nuestro catálogo por marca.</p>
         </div>
-        <div className="sf-categories">
-          {categories.map((c) => (
-            <Link
-              className="sf-category-card"
-              key={c}
-              to={`/catalogo?categoria=${encodeURIComponent(c)}`}
-            >
-              <img
-                src={categoryImages[c]}
-                alt=""
-                width="120"
-                height="120"
-                loading="lazy"
-              />
-              <div>
-                <h3>
-                  {c === 'Fijaciones'
-                    ? 'Tornillos y fijaciones'
-                    : c === 'Seguridad'
-                      ? 'Seguridad industrial'
-                      : c}
-                </h3>
-                <span>
-                  Explorar productos
-                  <Icon name="arrow" />
-                </span>
-              </div>
+        <div className="sf-brand-grid">
+          {brands.map((b, i) => (
+            <Link to={catalogHref({ brand: b })} key={b}>
+              <span className="sf-brand-index">0{i + 1}</span>
+              <strong>{b}</strong>
+              <Icon name="arrow" />
             </Link>
           ))}
         </div>
       </section>
-      <section className="sf-section">
-        <div className="sf-section-heading">
-          <div>
-            <span className="sf-eyebrow">PARA TU PRÓXIMO PROYECTO</span>
-            <h2>Productos destacados</h2>
-          </div>
-          <Link className="sf-text-link" to="/catalogo">
-            Ver todos
-            <Icon name="arrow" />
-          </Link>
+      <Shelf
+        id="featured-title"
+        title="Destacados para tu proyecto"
+        subtitle="Referencias del catálogo · Datos por confirmar"
+        items={featured}
+        to="/catalogo?orden=featured"
+      />
+      <Shelf
+        id="volume-title"
+        title="Explora la compra por volumen"
+        subtitle="Prueba el carrito con estos ejemplos"
+        items={volume}
+        to={catalogHref({ wholesale: true })}
+      />
+      <section className="sf-offers-ready" aria-labelledby="offers-heading">
+        <Icon name="check" />
+        <div>
+          <h2 id="offers-heading">Ofertas claras, cuando estén disponibles</h2>
+          <p>
+            No hay ofertas publicadas. Aquí encontrarás promociones con precio y
+            vigencia confirmados.
+          </p>
         </div>
-        <div className="sf-product-grid">
-          {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
+        <Link to="/catalogo" className="sf-text-link">
+          Explorar catálogo
+          <Icon name="arrow" />
+        </Link>
+      </section>
+      <section
+        className="sf-additional-categories"
+        aria-labelledby="categories-heading"
+      >
+        <div className="sf-section-heading">
+          <h2 id="categories-heading">Más para explorar</h2>
+        </div>
+        <div className="sf-category-links">
+          {rootCategories.map((c) => (
+            <Link key={c.id} to={catalogHref({ category: c.id })}>
+              <Icon name="box" />
+              <strong>{c.name}</strong>
+              <Icon name="arrow" />
+            </Link>
           ))}
         </div>
       </section>
@@ -118,18 +132,18 @@ export function HomePage() {
       <section className="sf-benefits" aria-label="Cómo comprar">
         <div>
           <Icon name="box" />
-          <h3>Compra a tu medida</h3>
-          <p>Elige la presentación que necesitas: unidad, caja o embalaje.</p>
+          <h3>La presentación correcta</h3>
+          <p>Compara unidad, caja o pack según cada producto.</p>
         </div>
         <div>
           <Icon name="sliders" />
           <h3>Precios por volumen</h3>
-          <p>Encuentra escalones de precio en productos seleccionados.</p>
+          <p>Revisa cantidades y equivalencias antes de agregar.</p>
         </div>
         <div>
           <Icon name="search" />
-          <h3>Todo más fácil de encontrar</h3>
-          <p>Explora categorías y filtra productos sin complicaciones.</p>
+          <h3>Encuentra más rápido</h3>
+          <p>Explora por familia, marca y disponibilidad.</p>
         </div>
       </section>
     </div>

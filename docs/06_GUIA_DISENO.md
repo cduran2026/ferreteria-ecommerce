@@ -27,3 +27,7 @@ Responsive: grids de 4/3 a 2 columnas, ficha apilada, filtros sobre catálogo en
 ## Storefront premium (etapa 18)
 
 El encabezado público ahora es blanco; el amarillo se reserva para identidad y pequeños acentos. Los estilos de tienda están aislados en storefront.css. Se incorporan ilustraciones originales de productos ficticios en JPEG, filtros móviles, tarjetas compactas, escalones por presentación y carrito local demostrativo. Se conservan tokens, primitivas y estilos administrativos. Decisiones, reglas, capturas y validaciones en [Rediseño del storefront](18_REDISENO_STOREFRONT.md).
+
+## Evolución comercial — Etapa 1
+
+Banner reducido, discos de corte primero, navegación jerárquica y por marcas. Tarjetas compactas y placeholders neutros hasta recibir fotografías autorizadas; las imágenes sintéticas anteriores dejan de mostrarse. Precios/stock desconocidos se informan y bloquean compra. Los estilos públicos incrementales viven en commercial.css. Ofertas sin datos válidos no muestran porcentajes ni tachados. Ver [Etapa 1](19_ETAPA_1_EVOLUCION_COMERCIAL.md).

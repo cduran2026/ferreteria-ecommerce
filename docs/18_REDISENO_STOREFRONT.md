@@ -76,3 +76,7 @@ No están habilitados autenticación, pagos, pedidos, despacho, reserva de inven
 Integrar PROMPT 03 de forma revisada posteriormente: sustituir el adaptador de catálogo manteniendo tipos y componentes; definir contratos explícitos de equivalencias y precios; calcular y validar el importe definitivo en servidor. El carrito local nunca debe ser fuente de verdad para stock, permisos ni precios. Revisar RLS y autenticación en la rama de integración antes de habilitar operaciones. Este rediseño no cambia migraciones ni funciones PostgreSQL.
 
 La rama se publica para revisión, sin merge automático. Una vista previa de Vercel sólo se reportará si se verifica una URL generada automáticamente; no se activa ningún despliegue manual.
+
+## Evolución posterior
+
+La [Etapa 1 comercial](19_ETAPA_1_EVOLUCION_COMERCIAL.md) reemplaza la distribución inicial de portada, incorpora referencias y marcas y deja de usar las imágenes sintéticas anteriores. Este documento conserva el registro histórico del primer rediseño.

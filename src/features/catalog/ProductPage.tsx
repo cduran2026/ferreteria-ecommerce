@@ -1,6 +1,8 @@
+import { ProductMedia } from '../../components/store/ProductMedia'
+import { ProductPrice } from '../../components/store/ProductPrice'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { products, money } from '../../services/catalog'
+import { storeProducts, money, baseQuantity } from '../../services/catalog'
 import type { Product } from '../../types/catalog'
 import { quote, tiersFor } from '../../services/demoCommerce'
 import { useCart } from '../cart/useCart'
@@ -10,7 +12,7 @@ import { QuantityControl } from '../../components/store/QuantityControl'
 import { ProductCard } from '../../components/store/ProductCard'
 export function ProductPage() {
   const { id } = useParams()
-  const product = products.find((p) => p.id === id)
+  const product = storeProducts.find((p) => p.id === id)
   return product ? (
     <ProductDetail key={product.id} product={product} />
   ) : (
@@ -32,18 +34,32 @@ function ProductDetail({ product: p }: { product: Product }) {
   const tiers = tiersFor(presentation)
   let pricing: ReturnType<typeof quote> | null = null,
     error = ''
+  let equivalentUnits: number | null = null
+  try {
+    equivalentUnits = baseQuantity(quantity, presentation.baseUnits)
+  } catch {
+    /* Cantidad inválida: se informa mediante el cotizador. */
+  }
   try {
     pricing = quote(p, presentation.id, quantity)
   } catch (e) {
     error = e instanceof Error ? e.message : 'Cantidad no válida.'
   }
-  const related = products.filter((x) => x.id !== p.id).slice(0, 3)
+  const related = storeProducts
+    .filter(
+      (x) =>
+        x.id !== p.id &&
+        (p.brand ? x.brand === p.brand : x.category === p.category),
+    )
+    .slice(0, 3)
   return (
     <div className="sf-container sf-page">
       <p className="sf-breadcrumb">
         <Link to="/">Inicio</Link>
         <span>/</span>
-        <Link to={`/catalogo?categoria=${encodeURIComponent(p.category)}`}>
+        <Link
+          to={`/catalogo?categoria=${encodeURIComponent(p.categoryId ?? p.category)}`}
+        >
           {p.category}
         </Link>
         <span>/</span>
@@ -51,28 +67,31 @@ function ProductDetail({ product: p }: { product: Product }) {
       </p>
       <div className="sf-product-detail">
         <section className="sf-gallery" aria-label="Galería del producto">
-          <button
-            className={`sf-gallery-main ${zoom ? 'is-zoomed' : ''}`}
-            aria-label={zoom ? 'Reducir imagen' : 'Ampliar imagen'}
-            aria-pressed={zoom}
-            onClick={() => setZoom(!zoom)}
-          >
-            <img src={p.image} alt={p.name} width="620" height="620" />
-          </button>
+          {p.image ? (
+            <>
+              <button
+                className={`sf-gallery-main ${zoom ? 'is-zoomed' : ''}`}
+                aria-label={zoom ? 'Reducir imagen' : 'Ampliar imagen'}
+                aria-pressed={zoom}
+                onClick={() => setZoom(!zoom)}
+              >
+                <ProductMedia product={p} priority />
+              </button>
+              <Button className="sf-link-button" onClick={() => setZoom(!zoom)}>
+                {zoom ? 'Vista completa' : 'Ver detalle'}
+              </Button>
+            </>
+          ) : (
+            <div className="sf-gallery-placeholder">
+              <ProductMedia product={p} />
+            </div>
+          )}
           <div className="sf-gallery-bottom">
-            <span>Imagen ilustrativa generada · Producto demo</span>
-            <Button className="sf-link-button" onClick={() => setZoom(!zoom)}>
-              {zoom ? 'Vista completa' : 'Ver detalle'}
-            </Button>
+            <span>
+              Fotografías autorizadas pendientes. No se usan imágenes de
+              terceros.
+            </span>
           </div>
-          <button
-            className="sf-thumbnail"
-            aria-label="Vista principal"
-            aria-pressed={!zoom}
-            onClick={() => setZoom(false)}
-          >
-            <img src={p.image} alt="" width="70" height="70" />
-          </button>
         </section>
         <section
           className="sf-buy-panel"
@@ -81,15 +100,34 @@ function ProductDetail({ product: p }: { product: Product }) {
           <span className="sf-eyebrow">{p.brand ?? p.category}</span>
           <h1>{p.name}</h1>
           <p className="sf-product-sku">
-            SKU {p.sku} · Catálogo de demostración
+            {p.sku
+              ? 'SKU ' + p.sku + ' · Ejemplo demo'
+              : 'Referencia comercial · Datos pendientes'}
           </p>
           <div className="sf-detail-price">
-            <strong>{money(pricing?.price ?? presentation.price)}</strong>
-            <span>por {presentation.label.toLowerCase()}</span>
+            <ProductPrice
+              price={pricing?.price ?? presentation.price}
+              label={presentation.label}
+            />
           </div>
+          <p className="sf-detail-equivalence">
+            {presentation.label}: {presentation.baseUnits}{' '}
+            {p.baseUnit ?? 'unidades base'}.{' '}
+            {presentation.baseUnits > 1 && presentation.price !== null && (
+              <span>
+                Equivalente aproximado:{' '}
+                {money(
+                  (pricing?.price ?? presentation.price) /
+                    presentation.baseUnits,
+                )}{' '}
+                por unidad base.
+              </span>
+            )}
+          </p>
           <p className="sf-demo-stock">
-            <span />
-            Stock de ejemplo: {p.stock} unidades base
+            {p.stock === null
+              ? 'Disponibilidad pendiente de confirmar'
+              : `Stock de ejemplo: ${p.stock} unidades base · Demo`}
           </p>
           <fieldset className="sf-presentations">
             <legend>Elige tu presentación</legend>
@@ -114,7 +152,9 @@ function ProductDetail({ product: p }: { product: Product }) {
                   {x.baseUnits}{' '}
                   {x.baseUnits === 1 ? 'unidad base' : 'unidades base'}
                 </small>
-                <span>{money(x.price)}</span>
+                <span>
+                  {x.price === null ? 'Precio pendiente' : money(x.price)}
+                </span>
               </label>
             ))}
           </fieldset>
@@ -156,18 +196,36 @@ function ProductDetail({ product: p }: { product: Product }) {
             </section>
           )}
           <div className="sf-quantity-row">
-            <label id="product-quantity-heading">Cantidad</label>
+            <span id="product-quantity-heading">
+              Cantidad de presentaciones
+            </span>
             <QuantityControl
               value={quantity}
               onChange={(v) => {
                 setQuantity(v)
                 setAdded(false)
               }}
-              max={Math.floor(p.stock / presentation.baseUnits)}
+              max={
+                p.stock === null
+                  ? undefined
+                  : Math.floor(p.stock / presentation.baseUnits)
+              }
+              disabled={p.stock === null || presentation.price === null}
             />
           </div>
           {error && (
-            <p className="sf-error" role="alert">
+            <p
+              className={
+                p.stock === null || presentation.price === null
+                  ? 'sf-data-notice'
+                  : 'sf-error'
+              }
+              role={
+                p.stock === null || presentation.price === null
+                  ? 'status'
+                  : 'alert'
+              }
+            >
               {error}
             </p>
           )}
@@ -178,7 +236,7 @@ function ProductDetail({ product: p }: { product: Product }) {
             </div>
             <div>
               <span>Unidades equivalentes</span>
-              <strong>{pricing?.units ?? '—'}</strong>
+              <strong>{equivalentUnits ?? '—'}</strong>
             </div>
             <div>
               <span>Precio aplicado</span>
@@ -207,7 +265,11 @@ function ProductDetail({ product: p }: { product: Product }) {
             }}
           >
             <Icon name="cart" />
-            {added ? 'Agregado al carrito' : 'Agregar al carrito'}
+            {presentation.price === null
+              ? 'Compra pendiente de datos'
+              : added
+                ? 'Agregado al carrito'
+                : 'Agregar al carrito'}
           </Button>
           {added && (
             <Link className="sf-after-add" to="/carrito">
@@ -225,9 +287,19 @@ function ProductDetail({ product: p }: { product: Product }) {
       <section className="sf-product-description">
         <h2>Sobre este producto</h2>
         <p>{p.description}</p>
+        {p.referenceUrl && (
+          <a
+            className="sf-text-link"
+            href={p.referenceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ver referencia proporcionada por el cliente ↗
+          </a>
+        )}
         <div>
           <span>SKU</span>
-          <strong>{p.sku}</strong>
+          <strong>{p.sku || 'Pendiente de catálogo definitivo'}</strong>
         </div>
         <div>
           <span>Categoría</span>
@@ -238,20 +310,24 @@ function ProductDetail({ product: p }: { product: Product }) {
           <strong>Según cada presentación, en unidades base.</strong>
         </div>
       </section>
-      <section className="sf-section">
-        <div className="sf-section-heading">
-          <h2>También para tu proyecto</h2>
-          <Link className="sf-text-link" to="/catalogo">
-            Ver todos
-            <Icon name="arrow" />
-          </Link>
-        </div>
-        <div className="sf-product-grid sf-related-grid">
-          {related.map((x) => (
-            <ProductCard key={x.id} product={x} />
-          ))}
-        </div>
-      </section>
+      {related.length > 0 && (
+        <section className="sf-section">
+          <div className="sf-section-heading">
+            <h2>
+              {p.brand ? 'Más de ' + p.brand : 'También para tu proyecto'}
+            </h2>
+            <Link className="sf-text-link" to="/catalogo">
+              Ver todos
+              <Icon name="arrow" />
+            </Link>
+          </div>
+          <div className="sf-product-grid sf-related-grid">
+            {related.map((x) => (
+              <ProductCard key={x.id} product={x} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   )
 }

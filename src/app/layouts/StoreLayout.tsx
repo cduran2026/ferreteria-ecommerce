@@ -1,19 +1,19 @@
-import { useRef } from 'react'
+import { NavigationMenus } from '../../components/store/NavigationMenus'
 import { Form, Link, NavLink, Outlet } from 'react-router-dom'
-import { categories } from '../../services/catalog'
+import { catalogHref } from '../../services/catalogTaxonomy'
 import { Input, Button } from '../../components/ui'
 import { Icon } from '../../components/store/Icon'
 import { CartProvider } from '../../features/cart/Provider'
 import { useCart } from '../../features/cart/useCart'
 function Header() {
   const { lines, message } = useCart()
-  const menu = useRef<HTMLDetailsElement>(null)
+
   const count = lines.reduce((n, l) => n + l.quantity, 0)
   return (
     <>
       <div className="sf-demo-bar">
         <span className="sf-demo-dot" />
-        Tienda de demostración · Productos, precios e imágenes ilustrativos
+        Tienda demo · Sin pagos ni pedidos reales
       </div>
       <header className="sf-header">
         <div className="sf-container sf-header-main">
@@ -58,48 +58,16 @@ function Header() {
         </div>
         <div className="sf-nav-border">
           <div className="sf-container sf-nav-row">
-            <details ref={menu} className="sf-category-menu">
-              <summary>
-                <Icon name="menu" />
-                Categorías
-                <Icon name="chevron" />
-              </summary>
-              <nav aria-label="Menú de categorías">
-                {categories.map((c) => (
-                  <Link
-                    key={c}
-                    to={`/catalogo?categoria=${encodeURIComponent(c)}`}
-                    onClick={() => {
-                      if (menu.current) menu.current.open = false
-                    }}
-                  >
-                    {c}
-                  </Link>
-                ))}
-                <Link
-                  to="/catalogo"
-                  onClick={() => {
-                    if (menu.current) menu.current.open = false
-                  }}
-                >
-                  Todo el catálogo
-                </Link>
-              </nav>
-            </details>
+            <NavigationMenus />
             <nav className="sf-main-nav" aria-label="Tienda">
               <NavLink to="/" end>
                 Inicio
               </NavLink>
               <NavLink to="/catalogo">Todos los productos</NavLink>
-              {categories.map((c) => (
-                <Link
-                  className="sf-category-nav"
-                  key={c}
-                  to={`/catalogo?categoria=${encodeURIComponent(c)}`}
-                >
-                  {c}
-                </Link>
-              ))}
+              <Link to={catalogHref({ category: 'discos' })}>
+                Discos de corte
+              </Link>
+              <Link to={catalogHref({ wholesale: true })}>Por volumen</Link>
             </nav>
             <Link className="sf-wholesale-link" to="/catalogo?mayorista=1">
               <Icon name="box" />
@@ -122,7 +90,7 @@ export function StoreLayout() {
           Saltar al contenido
         </a>
         <Header />
-        <main id="main">
+        <main id="main" tabIndex={-1}>
           <Outlet />
         </main>
         <footer className="sf-footer">
@@ -151,7 +119,7 @@ export function StoreLayout() {
             <div>
               <h3>Sobre esta tienda</h3>
               <p>
-                Identidad provisional y catálogo ficticio.
+                Catálogo de referencia y ejemplos demostrativos.
                 <br />
                 Sin pagos, pedidos ni despacho habilitados.
               </p>

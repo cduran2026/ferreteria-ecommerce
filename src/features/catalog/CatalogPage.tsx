@@ -1,48 +1,69 @@
 import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { categories, filterProducts } from '../../services/catalog'
-import { tiersFor } from '../../services/demoCommerce'
+import { storeProducts } from '../../services/catalog'
+import {
+  brands,
+  categoryTree,
+  rootCategories,
+} from '../../services/catalogTaxonomy'
+import { queryCatalog, readCatalogFilters } from '../../services/catalogQuery'
 import { ProductCard } from '../../components/store/ProductCard'
 import { Icon } from '../../components/store/Icon'
 import { Button, Input, Select } from '../../components/ui'
 export function CatalogPage() {
   const [params, setParams] = useSearchParams(),
     [open, setOpen] = useState(false)
-  const q = params.get('q') ?? '',
-    category = params.get('categoria') ?? '',
-    max = params.get('max') ?? '',
-    sort = params.get('orden') ?? 'recommended',
-    wholesale = params.get('mayorista') === '1'
+  const filters = readCatalogFilters(params)
   const update = (key: string, value: string) => {
     const next = new URLSearchParams(params)
     if (value) next.set(key, value)
     else next.delete(key)
     setParams(next)
   }
-  const found = filterProducts(
-    q,
-    category,
-    max ? Number(max) : Infinity,
-  ).filter(
-    (p) => !wholesale || p.presentations.some((x) => tiersFor(x).length > 1),
-  )
-  if (sort === 'price-up')
-    found.sort((a, b) => a.presentations[0].price - b.presentations[0].price)
-  if (sort === 'price-down')
-    found.sort((a, b) => b.presentations[0].price - a.presentations[0].price)
-  if (sort === 'name') found.sort((a, b) => a.name.localeCompare(b.name, 'es'))
+  const found = queryCatalog(storeProducts, filters)
+  const active = [
+    'q',
+    'categoria',
+    'marca',
+    'min',
+    'max',
+    'disponibilidad',
+    'mayorista',
+  ].some((k) => params.has(k))
+  const title = filters.brand
+    ? `Productos ${filters.brand}`
+    : filters.category
+      ? (categoryTree.find((c) => c.id === filters.category)?.name ??
+        'Catálogo')
+      : filters.wholesale
+        ? 'Compra por volumen'
+        : 'Todo para tu proyecto'
   return (
-    <div className="sf-container sf-page">
+    <div className="sf-container sf-page sf-commercial-catalog">
       <p className="sf-breadcrumb">
         <Link to="/">Inicio</Link>
         <span>/</span>Catálogo
+        {filters.brand && (
+          <>
+            <span>/</span>
+            {filters.brand}
+          </>
+        )}
       </p>
       <div className="sf-page-heading">
-        <h1>{wholesale ? 'Compra por mayor' : 'Encuentra lo que necesitas'}</h1>
-        <p>Tu próximo proyecto empieza con el producto correcto.</p>
+        <span className="sf-eyebrow">EXPLORA · COMPARA · ELIGE</span>
+        <h1>{title}</h1>
+        <p>
+          Referencias comerciales y ejemplos de compra. Precios y stock demo
+          identificados.
+        </p>
       </div>
       <div className="sf-catalog-layout">
-        <aside className={`sf-filters ${open ? 'is-open' : ''}`}>
+        <aside
+          id="catalog-filters"
+          className={`sf-filters ${open ? 'is-open' : ''}`}
+          aria-label="Filtros de catálogo"
+        >
           <div className="sf-filter-title">
             <h2>Filtrar productos</h2>
             <Button
@@ -54,50 +75,88 @@ export function CatalogPage() {
             </Button>
           </div>
           <label>
-            Buscar
+            Buscar en catálogo
             <Input
-              value={q}
+              value={filters.query}
               onChange={(e) => update('q', e.target.value)}
-              placeholder="Nombre, producto o SKU"
+              placeholder="Producto, marca o SKU"
             />
           </label>
-          <fieldset>
-            <legend>Categoría</legend>
-            <label className="sf-radio">
-              <input
-                type="radio"
-                name="category"
-                checked={!category}
-                onChange={() => update('categoria', '')}
+          <label>
+            Categoría
+            <Select
+              value={filters.category}
+              onChange={(e) => update('categoria', e.target.value)}
+            >
+              <option value="">Todas las categorías</option>
+              {rootCategories
+                .flatMap((parent) => [
+                  parent,
+                  ...categoryTree.filter(
+                    (child) => child.parent_id === parent.id,
+                  ),
+                ])
+                .map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.parent_id ? '— ' : ''}
+                    {c.name}
+                  </option>
+                ))}
+            </Select>
+          </label>
+          <label>
+            Marca
+            <Select
+              value={filters.brand}
+              onChange={(e) => update('marca', e.target.value)}
+            >
+              <option value="">Todas las marcas</option>
+              {brands.map((b) => (
+                <option key={b} value={b}>
+                  {b}
+                </option>
+              ))}
+            </Select>
+          </label>
+          <fieldset className="sf-price-range">
+            <legend>Precio por presentación</legend>
+            <label>
+              Desde
+              <Input
+                type="number"
+                min="0"
+                value={params.get('min') ?? ''}
+                placeholder="Sin mínimo"
+                onChange={(e) => update('min', e.target.value)}
               />
-              Todas las categorías
             </label>
-            {categories.map((c) => (
-              <label className="sf-radio" key={c}>
-                <input
-                  type="radio"
-                  name="category"
-                  checked={category === c}
-                  onChange={() => update('categoria', c)}
-                />
-                {c}
-              </label>
-            ))}
+            <label>
+              Hasta
+              <Input
+                type="number"
+                min="0"
+                value={params.get('max') ?? ''}
+                placeholder="Sin máximo"
+                onChange={(e) => update('max', e.target.value)}
+              />
+            </label>
           </fieldset>
           <label>
-            Precio máximo por presentación
-            <Input
-              type="number"
-              min="0"
-              value={max}
-              onChange={(e) => update('max', e.target.value)}
-              placeholder="Sin límite"
-            />
+            Disponibilidad
+            <Select
+              value={filters.availability}
+              onChange={(e) => update('disponibilidad', e.target.value)}
+            >
+              <option value="">Todas</option>
+              <option value="available">Disponible en demo</option>
+              <option value="unavailable">Sin disponibilidad demo</option>
+              <option value="unknown">Por confirmar</option>
+            </Select>
           </label>
           <label className="sf-radio">
             <input
               type="checkbox"
-              checked={wholesale}
+              checked={filters.wholesale}
               onChange={(e) => update('mayorista', e.target.checked ? '1' : '')}
             />
             Con precios por volumen
@@ -106,12 +165,11 @@ export function CatalogPage() {
             Limpiar filtros
           </Button>
           <Button className="sf-mobile-only" onClick={() => setOpen(false)}>
-            Ver {found.length} productos
+            Ver {found.length} {found.length === 1 ? 'producto' : 'productos'}
           </Button>
           <p className="sf-muted">
-            Precios y stock ilustrativos.
-            <br />
-            No constituyen ofertas comerciales.
+            Los rangos y el orden de precio utilizan una presentación de cada
+            producto. Los productos sin precio se excluyen del rango.
           </p>
         </aside>
         <section className="sf-catalog-results" aria-label="Resultados">
@@ -121,6 +179,7 @@ export function CatalogPage() {
             </span>
             <Button
               className="secondary sf-mobile-only"
+              aria-controls="catalog-filters"
               aria-expanded={open}
               onClick={() => setOpen(!open)}
             >
@@ -130,19 +189,28 @@ export function CatalogPage() {
             <label>
               Ordenar
               <Select
-                value={sort}
+                value={filters.sort}
                 onChange={(e) => update('orden', e.target.value)}
               >
-                <option value="recommended">Recomendados</option>
+                <option value="featured">Destacados</option>
+                <option value="newest">Novedades del catálogo</option>
                 <option value="price-up">Menor precio</option>
                 <option value="price-down">Mayor precio</option>
                 <option value="name">Nombre</option>
               </Select>
             </label>
           </div>
-          {(q || category || max || wholesale) && (
+          {active && (
             <div className="sf-active-filters">
-              <span>{q ? `Búsqueda: ${q}` : 'Filtros aplicados'}</span>
+              <span>
+                {[
+                  filters.query,
+                  filters.brand,
+                  categoryTree.find((c) => c.id === filters.category)?.name,
+                ]
+                  .filter(Boolean)
+                  .join(' · ') || 'Filtros aplicados'}
+              </span>
               <Button className="sf-link-button" onClick={() => setParams({})}>
                 Borrar filtros
               </Button>
@@ -157,7 +225,11 @@ export function CatalogPage() {
             <div className="sf-empty">
               <Icon name="search" width="40" height="40" />
               <h2>No encontramos productos</h2>
-              <p>Prueba otra búsqueda o cambia los filtros.</p>
+              <p>
+                {filters.brand === 'Stanford' || filters.brand === 'Rex'
+                  ? 'Estamos preparando el catálogo de esta marca.'
+                  : 'Prueba otra búsqueda o ajusta los filtros.'}
+              </p>
               <Button onClick={() => setParams({})}>
                 Ver todos los productos
               </Button>

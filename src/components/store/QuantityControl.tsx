@@ -5,11 +5,13 @@ export function QuantityControl({
   onChange,
   label = 'Cantidad',
   max,
+  disabled = false,
 }: {
   value: number
   onChange: (v: number) => void
   label?: string
   max?: number
+  disabled?: boolean
 }) {
   return (
     <div className="sf-quantity">
@@ -17,13 +19,14 @@ export function QuantityControl({
         type="button"
         className="sf-icon-button"
         aria-label={`Disminuir ${label.toLowerCase()}`}
-        disabled={value <= 1}
+        disabled={disabled || value <= 1}
         onClick={() => onChange(value - 1)}
       >
         <Icon name="minus" />
       </Button>
       <Input
         type="number"
+        disabled={disabled}
         aria-label={label}
         min="1"
         max={max}
@@ -35,7 +38,7 @@ export function QuantityControl({
         type="button"
         className="sf-icon-button"
         aria-label={`Aumentar ${label.toLowerCase()}`}
-        disabled={max !== undefined && value >= max}
+        disabled={disabled || (max !== undefined && value >= max)}
         onClick={() => onChange(value + 1)}
       >
         <Icon name="plus" />

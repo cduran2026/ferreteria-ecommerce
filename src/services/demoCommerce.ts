@@ -1,8 +1,9 @@
 import type { Product, Presentation, PriceTier } from '../types/catalog'
-import { baseQuantity, products } from './catalog'
+import { baseQuantity, storeProducts } from './catalog'
 export function tiersFor(presentation: Presentation): PriceTier[] {
+  if (presentation.price === null && !presentation.tiers?.length) return []
   const tiers = presentation.tiers ?? [
-    { minQuantity: 1, price: presentation.price },
+    { minQuantity: 1, price: presentation.price! },
   ]
   return [...tiers].sort((a, b) => a.minQuantity - b.minQuantity)
 }
@@ -25,6 +26,8 @@ export function quote(
     (p) => p.id === presentationId,
   )
   if (!presentation) throw new Error('Presentación no disponible.')
+  if (product.stock === null)
+    throw new Error('Disponibilidad pendiente de confirmar.')
   const units = baseQuantity(quantity, presentation.baseUnits),
     price = appliedPrice(presentation, quantity),
     total = price * quantity
@@ -45,11 +48,11 @@ export function lineKey(line: Pick<CartLine, 'productId' | 'presentationId'>) {
 function verifyCart(lines: CartLine[]) {
   const totals = new Map<string, number>()
   for (const line of lines) {
-    const p = products.find((p) => p.id === line.productId)
+    const p = storeProducts.find((p) => p.id === line.productId)
     if (!p) throw new Error('Producto no disponible.')
     const q = quote(p, line.presentationId, line.quantity)
     totals.set(p.id, (totals.get(p.id) ?? 0) + q.units)
-    if (totals.get(p.id)! > p.stock)
+    if (p.stock !== null && totals.get(p.id)! > p.stock)
       throw new Error(
         'Superas el stock de demostración entre las presentaciones de este producto.',
       )
@@ -81,7 +84,7 @@ export function removeFromCart(lines: CartLine[], key: string) {
 }
 export function cartQuotes(lines: CartLine[]) {
   return lines.map((line) => {
-    const product = products.find((p) => p.id === line.productId)!
+    const product = storeProducts.find((p) => p.id === line.productId)!
     return {
       line,
       product,
@@ -117,5 +120,60 @@ export function restoreCart(raw: string | null): CartLine[] {
     return verifyCart(lines)
   } catch {
     return []
+  }
+}
+
+export function availability(
+  product: Product,
+  presentation = product.presentations[0],
+) {
+  if (product.stock === null) return 'unknown'
+  return presentation && product.stock >= presentation.baseUnits
+    ? 'available'
+    : 'unavailable'
+}
+export function cardPricing(product: Product) {
+  const presentation = product.presentations[0]
+  const price = presentation?.price ?? null
+  const state = availability(product, presentation)
+  const volume = presentation
+    ? tiersFor(presentation)
+        .filter(
+          (t) =>
+            t.minQuantity > 1 &&
+            price !== null &&
+            t.price < price &&
+            product.stock !== null &&
+            t.minQuantity * presentation.baseUnits <= product.stock,
+        )
+        .at(-1)
+    : undefined
+  let purchasable = false
+  if (presentation) {
+    try {
+      quote(product, presentation.id, 1)
+      purchasable = true
+    } catch {
+      /* Datos incompletos o disponibilidad insuficiente. */
+    }
+  }
+  return { price, availability: state, volume, purchasable }
+}
+
+export function restoredCartState(raw: string | null) {
+  const lines = restoreCart(raw)
+  let hadItems: boolean
+  try {
+    const parsed: unknown = raw ? JSON.parse(raw) : []
+    hadItems = !Array.isArray(parsed) || parsed.length > 0
+  } catch {
+    hadItems = true
+  }
+  return {
+    lines,
+    message:
+      hadItems && !lines.length
+        ? 'El carrito guardado no pudo recuperarse: contiene datos inválidos o productos sin precio o disponibilidad. Vuelve a seleccionar los productos.'
+        : '',
   }
 }

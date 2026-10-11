@@ -1,0 +1,428 @@
+[
+  {
+    "requestedWidth": 360,
+    "path": "/",
+    "client": 345,
+    "content": 345,
+    "firstCardBottom": 698.90625,
+    "firstCardTop": 393.78125,
+    "height": 800,
+    "overflow": false,
+    "viewport": 360
+  },
+  {
+    "requestedWidth": 360,
+    "path": "/catalogo",
+    "client": 345,
+    "content": 345,
+    "firstCardBottom": 918.921875,
+    "firstCardTop": 440.609375,
+    "height": 800,
+    "overflow": false,
+    "viewport": 360
+  },
+  {
+    "requestedWidth": 360,
+    "path": "/producto/discos-yts-50",
+    "client": 345,
+    "content": 345,
+    "firstCardBottom": 2291.0625,
+    "firstCardTop": 1812.75,
+    "height": 800,
+    "overflow": false,
+    "viewport": 360
+  },
+  {
+    "requestedWidth": 360,
+    "path": "/producto/taladro",
+    "client": 345,
+    "content": 345,
+    "firstCardBottom": 2408.625,
+    "firstCardTop": 1939.09375,
+    "height": 800,
+    "overflow": false,
+    "viewport": 360
+  },
+  {
+    "requestedWidth": 360,
+    "path": "/carrito",
+    "client": 345,
+    "content": 345,
+    "height": 800,
+    "overflow": false,
+    "viewport": 360
+  },
+  {
+    "requestedWidth": 360,
+    "path": "/admin",
+    "client": 345,
+    "content": 345,
+    "height": 800,
+    "overflow": false,
+    "viewport": 360
+  },
+  {
+    "requestedWidth": 360,
+    "path": "/admin/inventario",
+    "client": 345,
+    "content": 345,
+    "height": 800,
+    "overflow": false,
+    "viewport": 360
+  },
+  {
+    "requestedWidth": 390,
+    "path": "/",
+    "client": 375,
+    "content": 375,
+    "firstCardBottom": 698.90625,
+    "firstCardTop": 393.78125,
+    "height": 800,
+    "overflow": false,
+    "viewport": 390
+  },
+  {
+    "requestedWidth": 390,
+    "path": "/catalogo",
+    "client": 375,
+    "content": 375,
+    "firstCardBottom": 909.140625,
+    "firstCardTop": 440.609375,
+    "height": 800,
+    "overflow": false,
+    "viewport": 390
+  },
+  {
+    "requestedWidth": 390,
+    "path": "/producto/discos-yts-50",
+    "client": 375,
+    "content": 375,
+    "firstCardBottom": 2225.1875,
+    "firstCardTop": 1756.65625,
+    "height": 800,
+    "overflow": false,
+    "viewport": 390
+  },
+  {
+    "requestedWidth": 390,
+    "path": "/producto/taladro",
+    "client": 375,
+    "content": 375,
+    "firstCardBottom": 2352.53125,
+    "firstCardTop": 1883,
+    "height": 800,
+    "overflow": false,
+    "viewport": 390
+  },
+  {
+    "requestedWidth": 390,
+    "path": "/carrito",
+    "client": 375,
+    "content": 375,
+    "height": 800,
+    "overflow": false,
+    "viewport": 390
+  },
+  {
+    "requestedWidth": 390,
+    "path": "/admin",
+    "client": 375,
+    "content": 375,
+    "height": 800,
+    "overflow": false,
+    "viewport": 390
+  },
+  {
+    "requestedWidth": 390,
+    "path": "/admin/inventario",
+    "client": 375,
+    "content": 375,
+    "height": 800,
+    "overflow": false,
+    "viewport": 390
+  },
+  {
+    "requestedWidth": 430,
+    "path": "/",
+    "client": 415,
+    "content": 415,
+    "firstCardBottom": 698.90625,
+    "firstCardTop": 393.78125,
+    "height": 800,
+    "overflow": false,
+    "viewport": 430
+  },
+  {
+    "requestedWidth": 430,
+    "path": "/catalogo",
+    "client": 415,
+    "content": 415,
+    "firstCardBottom": 909.140625,
+    "firstCardTop": 440.609375,
+    "height": 800,
+    "overflow": false,
+    "viewport": 430
+  },
+  {
+    "requestedWidth": 430,
+    "path": "/producto/discos-yts-50",
+    "client": 415,
+    "content": 415,
+    "firstCardBottom": 2141.796875,
+    "firstCardTop": 1673.265625,
+    "height": 800,
+    "overflow": false,
+    "viewport": 430
+  },
+  {
+    "requestedWidth": 430,
+    "path": "/producto/taladro",
+    "client": 415,
+    "content": 415,
+    "firstCardBottom": 2323.53125,
+    "firstCardTop": 1855,
+    "height": 800,
+    "overflow": false,
+    "viewport": 430
+  },
+  {
+    "requestedWidth": 430,
+    "path": "/carrito",
+    "client": 415,
+    "content": 415,
+    "height": 800,
+    "overflow": false,
+    "viewport": 430
+  },
+  {
+    "requestedWidth": 430,
+    "path": "/admin",
+    "client": 415,
+    "content": 415,
+    "height": 800,
+    "overflow": false,
+    "viewport": 430
+  },
+  {
+    "requestedWidth": 430,
+    "path": "/admin/inventario",
+    "client": 415,
+    "content": 415,
+    "height": 800,
+    "overflow": false,
+    "viewport": 430
+  },
+  {
+    "requestedWidth": 768,
+    "path": "/",
+    "client": 753,
+    "content": 753,
+    "firstCardBottom": 736.734375,
+    "firstCardTop": 462.140625,
+    "height": 900,
+    "overflow": false,
+    "viewport": 768
+  },
+  {
+    "requestedWidth": 768,
+    "path": "/catalogo",
+    "client": 753,
+    "content": 753,
+    "firstCardBottom": 993.71875,
+    "firstCardTop": 489.125,
+    "height": 900,
+    "overflow": false,
+    "viewport": 768
+  },
+  {
+    "requestedWidth": 768,
+    "path": "/producto/discos-yts-50",
+    "client": 753,
+    "content": 753,
+    "firstCardBottom": 2368.90625,
+    "firstCardTop": 1864.3125,
+    "height": 900,
+    "overflow": false,
+    "viewport": 768
+  },
+  {
+    "requestedWidth": 768,
+    "path": "/producto/taladro",
+    "client": 753,
+    "content": 753,
+    "firstCardBottom": 2522.59375,
+    "firstCardTop": 2018,
+    "height": 900,
+    "overflow": false,
+    "viewport": 768
+  },
+  {
+    "requestedWidth": 768,
+    "path": "/carrito",
+    "client": 753,
+    "content": 753,
+    "height": 900,
+    "overflow": false,
+    "viewport": 768
+  },
+  {
+    "requestedWidth": 768,
+    "path": "/admin",
+    "client": 753,
+    "content": 753,
+    "height": 900,
+    "overflow": false,
+    "viewport": 768
+  },
+  {
+    "requestedWidth": 768,
+    "path": "/admin/inventario",
+    "client": 768,
+    "content": 768,
+    "height": 900,
+    "overflow": false,
+    "viewport": 768
+  },
+  {
+    "requestedWidth": 1024,
+    "path": "/",
+    "client": 1009,
+    "content": 1009,
+    "firstCardBottom": 607.546875,
+    "firstCardTop": 385.546875,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1024
+  },
+  {
+    "requestedWidth": 1024,
+    "path": "/catalogo",
+    "client": 1009,
+    "content": 1009,
+    "firstCardBottom": 911.125,
+    "firstCardTop": 406.53125,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1024
+  },
+  {
+    "requestedWidth": 1024,
+    "path": "/producto/discos-yts-50",
+    "client": 1009,
+    "content": 1009,
+    "firstCardBottom": 1943.484375,
+    "firstCardTop": 1438.890625,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1024
+  },
+  {
+    "requestedWidth": 1024,
+    "path": "/producto/taladro",
+    "client": 1009,
+    "content": 1009,
+    "firstCardBottom": 2097.171875,
+    "firstCardTop": 1592.578125,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1024
+  },
+  {
+    "requestedWidth": 1024,
+    "path": "/carrito",
+    "client": 1009,
+    "content": 1009,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1024
+  },
+  {
+    "requestedWidth": 1024,
+    "path": "/admin",
+    "client": 1009,
+    "content": 1009,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1024
+  },
+  {
+    "requestedWidth": 1024,
+    "path": "/admin/inventario",
+    "client": 1024,
+    "content": 1024,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1024
+  },
+  {
+    "requestedWidth": 1440,
+    "path": "/",
+    "client": 1425,
+    "content": 1425,
+    "firstCardBottom": 607.546875,
+    "firstCardTop": 385.546875,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1440
+  },
+  {
+    "requestedWidth": 1440,
+    "path": "/catalogo",
+    "client": 1425,
+    "content": 1425,
+    "firstCardBottom": 911.125,
+    "firstCardTop": 406.53125,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1440
+  },
+  {
+    "requestedWidth": 1440,
+    "path": "/producto/discos-yts-50",
+    "client": 1425,
+    "content": 1425,
+    "firstCardBottom": 1948.671875,
+    "firstCardTop": 1444.078125,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1440
+  },
+  {
+    "requestedWidth": 1440,
+    "path": "/producto/taladro",
+    "client": 1425,
+    "content": 1425,
+    "firstCardBottom": 2102.359375,
+    "firstCardTop": 1597.765625,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1440
+  },
+  {
+    "requestedWidth": 1440,
+    "path": "/carrito",
+    "client": 1425,
+    "content": 1425,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1440
+  },
+  {
+    "requestedWidth": 1440,
+    "path": "/admin",
+    "client": 1425,
+    "content": 1425,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1440
+  },
+  {
+    "requestedWidth": 1440,
+    "path": "/admin/inventario",
+    "client": 1440,
+    "content": 1440,
+    "height": 900,
+    "overflow": false,
+    "viewport": 1440
+  }
+]

@@ -1,3 +1,4 @@
+import { ProductMedia } from '../../components/store/ProductMedia'
 import { Link } from 'react-router-dom'
 import { useCart } from './useCart'
 import { cartQuotes, lineKey } from '../../services/demoCommerce'
@@ -49,12 +50,7 @@ export function CartPage() {
                   className="sf-cart-image"
                   to={`/producto/${q.product.id}`}
                 >
-                  <img
-                    src={q.product.image}
-                    alt={q.product.name}
-                    width="150"
-                    height="150"
-                  />
+                  <ProductMedia product={q.product} />
                 </Link>
                 <div className="sf-cart-item-info">
                   <Link to={`/producto/${q.product.id}`}>
@@ -72,7 +68,7 @@ export function CartPage() {
                       value={q.quantity}
                       label={`Cantidad de ${q.product.name}, ${q.presentation.label}`}
                       max={Math.floor(
-                        q.product.stock / q.presentation.baseUnits,
+                        (q.product.stock ?? 0) / q.presentation.baseUnits,
                       )}
                       onChange={(v) => update(lineKey(q.line), v)}
                     />

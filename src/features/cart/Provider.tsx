@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import {
   addToCart,
   removeFromCart,
-  restoreCart,
+  restoredCartState,
   updateCart,
 } from '../../services/demoCommerce'
 import type { CartLine } from '../../services/demoCommerce'
@@ -11,14 +11,15 @@ import { CartContext } from './context'
 const storageKey = 'allstore.demo-cart.v1'
 function initialCart() {
   try {
-    return restoreCart(localStorage.getItem(storageKey))
+    return restoredCartState(localStorage.getItem(storageKey))
   } catch {
-    return []
+    return { lines: [], message: '' }
   }
 }
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [lines, setLines] = useState<CartLine[]>(initialCart),
-    [message, setMessage] = useState('')
+  const [restored] = useState(initialCart)
+  const [lines, setLines] = useState<CartLine[]>(restored.lines),
+    [message, setMessage] = useState(restored.message)
   useEffect(() => {
     try {
       localStorage.setItem(storageKey, JSON.stringify(lines))

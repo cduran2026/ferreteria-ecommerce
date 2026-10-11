@@ -1,54 +1,59 @@
 import { Link } from 'react-router-dom'
 import type { Product } from '../../types/catalog'
 import { money } from '../../services/catalog'
-import { tiersFor } from '../../services/demoCommerce'
+import { cardPricing } from '../../services/demoCommerce'
 import { useCart } from '../../features/cart/useCart'
 import { Icon } from './Icon'
 import { Button } from '../ui'
+import { ProductMedia } from './ProductMedia'
+import { ProductPrice } from './ProductPrice'
 export function ProductCard({ product }: { product: Product }) {
   const { add } = useCart()
-  const presentation = product.presentations[0],
-    last =
-      tiersFor(presentation)
-        .filter(
-          (tier) => tier.minQuantity * presentation.baseUnits <= product.stock,
-        )
-        .at(-1) ?? tiersFor(presentation)[0]
-  const wholesale = last.minQuantity > 1 && last.price < presentation.price
+  const presentation = product.presentations[0]
+  const pricing = cardPricing(product)
   return (
     <article className="sf-product-card">
       <Link className="sf-product-photo" to={`/producto/${product.id}`}>
-        <img
-          src={product.image}
-          alt={product.name}
-          width="300"
-          height="300"
-          loading="lazy"
-        />
+        <ProductMedia product={product} />
       </Link>
       <div className="sf-product-content">
         <span className="sf-product-category">
-          {product.brand ?? product.category}
+          {product.brand ?? 'Ejemplo sin marca'}
         </span>
         <Link className="sf-product-name" to={`/producto/${product.id}`}>
           <h3>{product.name}</h3>
         </Link>
-        <p className="sf-presentation-label">{presentation.label}</p>
-        <strong className="sf-product-price">
-          {money(presentation.price)}
-        </strong>
+        <p className="sf-presentation-label">
+          {presentation?.label ?? 'Presentación pendiente'}
+        </p>
+        <ProductPrice price={pricing.price} />
         <div className="sf-card-wholesale">
-          {wholesale ? (
+          {pricing.volume ? (
             <>
-              <span>Por mayor: {money(last.price)}</span>
-              <small>Desde {last.minQuantity} presentaciones</small>
+              <span>Por volumen: {money(pricing.volume.price)}</span>
+              <small>
+                Desde {pricing.volume.minQuantity} presentaciones · Demo
+              </small>
             </>
           ) : (
-            <small>Precio por presentación</small>
+            <small>
+              {product.dataKind === 'reference'
+                ? 'Condiciones comerciales pendientes'
+                : 'Precio de ejemplo · Sin venta real'}
+            </small>
           )}
         </div>
+        <small className="sf-availability">
+          {pricing.availability === 'unknown'
+            ? 'Disponibilidad por confirmar'
+            : pricing.availability === 'unavailable'
+              ? 'Sin disponibilidad demo'
+              : 'Disponible en demo'}
+        </small>
         <div className="sf-product-actions">
           <Button
+            disabled={!pricing.purchasable}
+            aria-label={`Agregar ${product.name} al carrito`}
             onClick={() =>
               add({
                 productId: product.id,
@@ -56,8 +61,6 @@ export function ProductCard({ product }: { product: Product }) {
                 quantity: 1,
               })
             }
-            disabled={product.stock < presentation.baseUnits}
-            aria-label={`Agregar ${product.name} al carrito`}
           >
             <Icon name="plus" />
             Agregar

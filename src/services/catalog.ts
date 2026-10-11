@@ -1,11 +1,16 @@
-import type { Product } from '../types/catalog'
-export const products: Product[] = [
+import { referenceProducts } from './referenceCatalog'
+import type { DemoProduct } from '../types/catalog'
+export const products: DemoProduct[] = [
   {
     id: 'taladro',
+    categoryId: 'perforacion',
+    dataKind: 'demo',
+    introducedAt: '2026-10-09',
+    baseUnit: 'unidades base',
     sku: 'HER-001',
     name: 'Taladro percutor inalámbrico 20V',
     category: 'Herramientas',
-    image: '/products/drill-demo.jpg',
+    image: '',
     stock: 24,
     description:
       'Equipo de ejemplo para perforación y montaje. Incluye batería y cargador. Especificaciones ilustrativas; no corresponde a una oferta comercial.',
@@ -35,10 +40,14 @@ export const products: Product[] = [
   },
   {
     id: 'herramientas',
+    categoryId: 'herramientas',
+    dataKind: 'demo',
+    introducedAt: '2026-10-09',
+    baseUnit: 'unidades base',
     sku: 'HER-002',
     name: 'Set de herramientas de mano · 12 piezas',
     category: 'Herramientas',
-    image: '/products/tools-demo.jpg',
+    image: '',
     stock: 36,
     description: 'Set demostrativo para mantenimiento y reparación.',
     presentations: [
@@ -57,10 +66,14 @@ export const products: Product[] = [
   },
   {
     id: 'tornillos',
+    categoryId: 'fijaciones',
+    dataKind: 'demo',
+    introducedAt: '2026-10-09',
+    baseUnit: 'unidades base',
     sku: 'FIJ-001',
     name: 'Tornillos para madera 4 × 40 mm',
     category: 'Fijaciones',
-    image: '/products/screws-demo.jpg',
+    image: '',
     stock: 2400,
     description:
       'Fijación de ejemplo. El inventario se expresa en tornillos como unidad base.',
@@ -90,10 +103,14 @@ export const products: Product[] = [
   },
   {
     id: 'guantes',
+    categoryId: 'seguridad',
+    dataKind: 'demo',
+    introducedAt: '2026-10-09',
+    baseUnit: 'unidades base',
     sku: 'SEG-001',
     name: 'Guantes de trabajo con recubrimiento',
     category: 'Seguridad',
-    image: '/products/gloves-demo.jpg',
+    image: '',
     stock: 8,
     description:
       'Guantes ilustrativos. No constituyen una certificación de protección.',
@@ -122,6 +139,7 @@ export const products: Product[] = [
     ],
   },
 ]
+export const storeProducts = [...referenceProducts, ...products]
 export const categories = [...new Set(products.map((p) => p.category))]
 export const money = (value: number) =>
   new Intl.NumberFormat('es-CL', {
