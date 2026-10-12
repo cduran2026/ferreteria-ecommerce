@@ -38,7 +38,8 @@ describe('Estados comerciales renderizados', () => {
       html.indexOf('Tus marcas'),
     )
     expect(html).toContain('No hay ofertas publicadas')
-    expect(html).not.toContain('<img')
+    expect((html.match(/sf-official-brand-logo/g) ?? []).length).toBe(5)
+    expect(html).toContain('/images/brands/toro-negro.png')
   })
   it('enlaza categorías hijas y marcas mediante navegación semántica', () => {
     const html = render(<NavigationMenus />)

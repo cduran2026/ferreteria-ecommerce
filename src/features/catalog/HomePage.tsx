@@ -1,3 +1,4 @@
+import { brandLogos } from '../../config/brandLogos'
 import { Link } from 'react-router-dom'
 import { storeProducts } from '../../services/catalog'
 import {
@@ -75,10 +76,25 @@ export function HomePage() {
           <p>Explora nuestro catálogo por marca.</p>
         </div>
         <div className="sf-brand-grid">
-          {brands.map((b, i) => (
-            <Link to={catalogHref({ brand: b })} key={b}>
-              <span className="sf-brand-index">0{i + 1}</span>
-              <strong>{b}</strong>
+          {brands.map((b) => (
+            <Link
+              to={catalogHref({ brand: b })}
+              key={b}
+              aria-label={`Explorar productos de ${b}`}
+              title={b}
+            >
+              {brandLogos[b] ? (
+                <img
+                  className="sf-official-brand-logo"
+                  src={brandLogos[b]}
+                  alt={b}
+                  width="850"
+                  height="567"
+                  loading="lazy"
+                />
+              ) : (
+                <strong>{b}</strong>
+              )}
               <Icon name="arrow" />
             </Link>
           ))}

@@ -66,3 +66,7 @@ Las comprobaciones de navegador son pruebas sobre viewport, no certificación WC
 Avatar individual autorizado y aprobación comercial; confirmación de uso de WhatsApp; fotografías, precios y stock reales; productos de marcas vacías. Integración de IA, promociones y Supabase requieren una etapa posterior aprobada. Ningún precio, equivalencia, inventario, descuento o regla de carrito cambia en 1B.
 
 Desactivar fácilmente con storeAssistantConfig.enabled=false. Publicar únicamente feature/storefront-premium-redesign y revisar su Preview automática; no merge ni promoción a producción.
+
+## Logos oficiales — 12 de octubre de 2026
+
+Se incorporan los PNG oficiales entregados por el cliente a “Tus marcas, más cerca”: Toro Negro (03), YTS (04), Akilda (05), Rex (06) y Stanford (07). Copias idénticas en public/images/brands, sin recortar, recolorear ni modificar los archivos originales. Configuración central en src/config/brandLogos.ts. Mantienen proporción con object-fit: contain, texto alternativo, nombre accesible y el filtro de marca existente. Esta autorización aplica a estos logos; no habilita el avatar ni WhatsApp pendientes.

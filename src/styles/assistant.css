@@ -470,3 +470,26 @@
     padding-right: 104px;
   }
 }
+/* Logos oficiales: imagen original, sin recolorear ni deformar. */
+.storefront .sf-brand-grid a {
+  min-height: 98px;
+  padding: 10px;
+  gap: 8px;
+}
+.sf-official-brand-logo {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  width: calc(100% - 24px);
+  height: 76px;
+  object-fit: contain;
+}
+@media (max-width: 560px) {
+  .storefront .sf-brand-grid a {
+    min-height: 94px;
+    padding: 8px;
+  }
+  .sf-official-brand-logo {
+    height: 72px;
+  }
+}
