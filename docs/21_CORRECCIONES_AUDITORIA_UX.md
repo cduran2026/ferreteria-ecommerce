@@ -27,13 +27,13 @@ commercialCopy sólo formatea texto desde Presentation y Product. Un set de doce
 
 El carrito muestra equivalencia por línea y productos diferentes en el resumen; no mezcla unidades de productos heterogéneos. Cálculos monetarios siguen en demoCommerce, sin nuevas reglas de negocio.
 
-NavigationLayout es padre común de los layouts públicos y administrativos, sin alterar pantallas admin. ScrollRestoration usa una clave propia allstore.scroll.v1 en sessionStorage; sólo posiciones por historial, sin datos personales. Memoria de enlaces de origen en RAM, ignorando clics con modificadores para preservar apertura en otra pestaña. No hay servicios externos ni dependencias nuevas.
+NavigationLayout es padre común de los layouts públicos y administrativos, sin alterar pantallas admin. ScrollRestoration usa una clave propia allstore.scroll.v1 en sessionStorage; sólo posiciones por historial, sin datos personales. La clave combina entrada, ruta y filtros para evitar heredar posiciones entre cargas directas distintas con key=default. Memoria de enlaces de origen en RAM, ignorando clics con modificadores para preservar apertura en otra pestaña. No hay servicios externos ni dependencias nuevas.
 
 Las nuevas rutas no simulan autorización: administración continúa en modo demo. Productos pendientes y checkout siguen bloqueados. WhatsApp y recurso gráfico del asistente no se habilitan.
 
 ## Validación local
 
-54 pruebas en seis archivos: se mantienen las 46 anteriores (dos expectativas de texto/CTA actualizadas para la conducta aprobada), más ocho de correcciones. Cobertura nueva: fallback/exclusiones, cambio de foco, layout/ruta anidada con ScrollRestoration, producto sin precio/stock, nombres comerciales, equivalencias/precios de caja, carrito mixto y feedback de éxito/error.
+55 pruebas en seis archivos: se mantienen las 46 anteriores (dos expectativas de texto/CTA actualizadas para la conducta aprobada), más nueve de correcciones. Cobertura nueva: fallback/exclusiones, cambio de foco, layout/ruta anidada con ScrollRestoration, producto sin precio/stock, nombres comerciales, equivalencias/precios de caja, carrito mixto y feedback de éxito/error.
 
 Navegador automatizado:
 

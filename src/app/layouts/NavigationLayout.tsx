@@ -5,7 +5,7 @@ import {
   useLocation,
   useNavigationType,
 } from 'react-router-dom'
-import { shouldFocusPage } from '../../services/navigation'
+import { shouldFocusPage, scrollEntryKey } from '../../services/navigation'
 export function NavigationLayout() {
   const location = useLocation()
   const navigationType = useNavigationType()
@@ -57,7 +57,10 @@ export function NavigationLayout() {
   return (
     <>
       <Outlet />
-      <ScrollRestoration storageKey="allstore.scroll.v1" />
+      <ScrollRestoration
+        storageKey="allstore.scroll.v1"
+        getKey={scrollEntryKey}
+      />
     </>
   )
 }

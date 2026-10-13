@@ -8,7 +8,7 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 import { NavigationLayout } from '../src/app/layouts/NavigationLayout'
-import { shouldFocusPage } from '../src/services/navigation'
+import { shouldFocusPage, scrollEntryKey } from '../src/services/navigation'
 import { products } from '../src/services/catalog'
 import { referenceProducts } from '../src/services/referenceCatalog'
 import {
@@ -26,6 +26,19 @@ import {
   restoreCart,
 } from '../src/services/demoCommerce'
 describe('Correcciones de recorrido comercial', () => {
+  it('cargas directas no heredan el scroll de otra ruta con la clave default', () => {
+    const catalog = { key: 'default', pathname: '/catalogo', search: '' }
+    expect(scrollEntryKey(catalog)).not.toBe(
+      scrollEntryKey({ ...catalog, pathname: '/' }),
+    )
+    expect(scrollEntryKey(catalog)).not.toBe(
+      scrollEntryKey({ ...catalog, key: 'another-entry' }),
+    )
+    expect(scrollEntryKey(catalog)).not.toBe(
+      scrollEntryKey({ ...catalog, search: '?marca=YTS' }),
+    )
+    expect(scrollEntryKey(catalog)).toBe('default:/catalogo')
+  })
   it('el feedback enlaza al mismo carrito tras agregar y no muestra éxito ante error', () => {
     const success = renderToStaticMarkup(
       <MemoryRouter>
