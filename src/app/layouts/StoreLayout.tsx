@@ -1,3 +1,4 @@
+import { CartFeedback } from '../../features/cart/CartFeedback'
 import { StoreAssistant } from '../../components/store/assistant/StoreAssistant'
 import { NavigationMenus } from '../../components/store/NavigationMenus'
 import { Form, Link, NavLink, Outlet } from 'react-router-dom'
@@ -30,6 +31,8 @@ function Header() {
             <Icon name="search" />
             <Input
               name="q"
+              type="search"
+              autoComplete="off"
               aria-label="Buscar productos"
               placeholder="Busca herramientas, materiales y más…"
             />
@@ -77,9 +80,7 @@ function Header() {
           </div>
         </div>
       </header>
-      <div className="sf-live-message" role="status" aria-live="polite">
-        {message}
-      </div>
+      <CartFeedback message={message} />
     </>
   )
 }

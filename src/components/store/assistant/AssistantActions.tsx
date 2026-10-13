@@ -59,7 +59,6 @@ export function AssistantActions({
           <Icon name={action.icon} />
           <span>
             <strong>{action.label}</strong>
-            <small>{action.hint}</small>
           </span>
           <Icon name="arrow" />
         </button>

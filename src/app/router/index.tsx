@@ -1,3 +1,4 @@
+import { NavigationLayout } from '../layouts/NavigationLayout'
 import { CartPage } from '../../features/cart/CartPage'
 import { RouteError } from '../../components/ui/RouteError'
 import { createBrowserRouter, Link } from 'react-router-dom'
@@ -16,36 +17,41 @@ import {
 import { EmptyState } from '../../components/ui'
 export const router = createBrowserRouter([
   {
-    element: <StoreLayout />,
-    errorElement: <RouteError />,
+    element: <NavigationLayout />,
     children: [
-      { path: '/', element: <HomePage /> },
-      { path: '/catalogo', element: <CatalogPage /> },
-      { path: '/producto/:id', element: <ProductPage /> },
       {
-        path: '/carrito',
-        element: <CartPage />,
+        element: <StoreLayout />,
+        errorElement: <RouteError />,
+        children: [
+          { path: '/', element: <HomePage /> },
+          { path: '/catalogo', element: <CatalogPage /> },
+          { path: '/producto/:id', element: <ProductPage /> },
+          {
+            path: '/carrito',
+            element: <CartPage />,
+          },
+          {
+            path: '*',
+            element: (
+              <div className="container section">
+                <EmptyState>
+                  Página no encontrada. <Link to="/">Volver al inicio</Link>
+                </EmptyState>
+              </div>
+            ),
+          },
+        ],
       },
       {
-        path: '*',
-        element: (
-          <div className="container section">
-            <EmptyState>
-              Página no encontrada. <Link to="/">Volver al inicio</Link>
-            </EmptyState>
-          </div>
-        ),
+        path: '/admin',
+        element: <AdminLayout />,
+        errorElement: <RouteError />,
+        children: [
+          { index: true, element: <DashboardPage /> },
+          { path: 'inventario', element: <InventoryPage /> },
+          { path: 'modulo/:module', element: <ModulePage /> },
+        ],
       },
-    ],
-  },
-  {
-    path: '/admin',
-    element: <AdminLayout />,
-    errorElement: <RouteError />,
-    children: [
-      { index: true, element: <DashboardPage /> },
-      { path: 'inventario', element: <InventoryPage /> },
-      { path: 'modulo/:module', element: <ModulePage /> },
     ],
   },
 ])

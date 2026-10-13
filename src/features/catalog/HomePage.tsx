@@ -56,7 +56,9 @@ export function HomePage() {
           <span className="sf-eyebrow">
             ALL STORE · AL DETALLE Y POR VOLUMEN
           </span>
-          <h1 id="home-heading">Encuentra lo que mueve tu proyecto.</h1>
+          <h1 id="home-heading">
+            Herramientas y ferretería al detalle y por mayor
+          </h1>
         </div>
         <Link to={catalogHref({ category: 'discos' })} className="button">
           Explorar discos
@@ -103,7 +105,7 @@ export function HomePage() {
       <Shelf
         id="featured-title"
         title="Destacados para tu proyecto"
-        subtitle="Referencias del catálogo · Datos por confirmar"
+        subtitle="Productos de referencia"
         items={featured}
         to="/catalogo?orden=featured"
       />

@@ -35,3 +35,7 @@ Banner reducido, discos de corte primero, navegación jerárquica y por marcas. 
 ## Etapa 1B — Asistencia e iconografía
 
 Extensión del storefront aprobado: iconos por familia, Akilda en navegación, acceso compacto de ayuda y panel guiado voluntario. Avatar de casco temporal, sin reutilizar el póster compuesto. WhatsApp y avatar final requieren aprobación comercial. Movimiento reducido, foco contenido, feedback del carrito conservado. Detalles en [Etapa 1B](20_ETAPA_1B_ASISTENTE_COMPRAS.md).
+
+## Correcciones de auditoría UX
+
+Se preserva identidad y estructura. Textos comerciales legibles, acciones táctiles >=44 px, CTA Ver producto para referencias sin datos, contenido por unidades/cajas/pares/sets y asistente compacto. Scroll/foco y fallback SPA corrigen la navegación. Registro en [correcciones UX](21_CORRECCIONES_AUDITORIA_UX.md).

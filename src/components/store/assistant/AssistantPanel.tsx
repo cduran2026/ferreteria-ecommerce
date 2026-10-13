@@ -71,12 +71,7 @@ export function AssistantPanel({
         {state.view === 'home' && (
           <>
             <p className="sf-assistant-greeting">
-              ¡Hola! Soy Toro Negro, tu asistente de All Store Chile. Te ayudo a
-              explorar esta tienda.
-            </p>
-            <p className="sf-assistant-note">
-              Asistente guiado · Catálogo demostrativo. Elige una opción; no hay
-              conversación con IA.
+              Soy Toro Negro. Elige cómo te ayudo.
             </p>
             <AssistantActions
               onSelect={(view) => dispatch({ type: 'view', view })}
@@ -203,7 +198,7 @@ export function AssistantPanel({
             </p>
             <dl className="sf-assistant-volume">
               <dt>Unidad</dt>
-              <dd>Una unidad base, cuando el producto la ofrece.</dd>
+              <dd>Una pieza, par o set, según lo que indique la ficha.</dd>
               <dt>Caja, pack o embalaje</dt>
               <dd>
                 Un conjunto con la cantidad indicada en la ficha. No todos los
@@ -211,8 +206,9 @@ export function AssistantPanel({
               </dd>
               <dt>Precio por cantidad</dt>
               <dd>
-                Algunos productos tienen escalones por número de presentaciones.
-                Revisa equivalencias, precio aplicado y total antes de agregar.
+                Algunos productos tienen precios por cantidad de unidades, cajas
+                o packs. Revisa equivalencias, precio aplicado y total antes de
+                agregar.
               </dd>
             </dl>
             <p className="sf-assistant-note">
@@ -240,9 +236,8 @@ export function AssistantPanel({
               </p>
             </div>
             <p className="sf-assistant-note">
-              Esta cantidad cuenta presentaciones, no unidades equivalentes. En
-              el carrito puedes revisar cantidades, equivalencias y totales. Sin
-              pagos ni pedidos reales.
+              Revisa cantidades, contenido y total en tu carrito de
+              demostración.
             </p>
             <Link
               className="sf-assistant-primary"

@@ -18,7 +18,7 @@ export function CatalogPage() {
     const next = new URLSearchParams(params)
     if (value) next.set(key, value)
     else next.delete(key)
-    setParams(next)
+    setParams(next, { preventScrollReset: true })
   }
   const found = queryCatalog(storeProducts, filters)
   const active = [
@@ -161,7 +161,10 @@ export function CatalogPage() {
             />
             Con precios por volumen
           </label>
-          <Button className="secondary" onClick={() => setParams({})}>
+          <Button
+            className="secondary"
+            onClick={() => setParams({}, { preventScrollReset: true })}
+          >
             Limpiar filtros
           </Button>
           <Button className="sf-mobile-only" onClick={() => setOpen(false)}>
@@ -211,7 +214,10 @@ export function CatalogPage() {
                   .filter(Boolean)
                   .join(' · ') || 'Filtros aplicados'}
               </span>
-              <Button className="sf-link-button" onClick={() => setParams({})}>
+              <Button
+                className="sf-link-button"
+                onClick={() => setParams({}, { preventScrollReset: true })}
+              >
                 Borrar filtros
               </Button>
             </div>
@@ -232,7 +238,9 @@ export function CatalogPage() {
                   ? 'Estamos preparando el catálogo de esta marca.'
                   : 'Prueba otra búsqueda o ajusta los filtros.'}
               </p>
-              <Button onClick={() => setParams({})}>
+              <Button
+                onClick={() => setParams({}, { preventScrollReset: true })}
+              >
                 Ver todos los productos
               </Button>
             </div>

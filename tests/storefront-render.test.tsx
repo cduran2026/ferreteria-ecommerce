@@ -20,7 +20,8 @@ describe('Estados comerciales renderizados', () => {
     const html = render(<ProductCard product={referenceProducts[0]} />)
     expect(html).toContain('Precio pendiente')
     expect(html).toContain('Fotografía pendiente')
-    expect(html).toContain('disabled=""')
+    expect(html).toContain('Ver producto')
+    expect(html).not.toContain('aria-label="Agregar')
     expect(html).not.toContain('<img')
     expect(html).not.toContain('%')
     expect(html).not.toContain('$')
@@ -29,7 +30,7 @@ describe('Estados comerciales renderizados', () => {
     const html = render(<ProductCard product={products[0]} />)
     expect(html).toContain('69.990')
     expect(html).toContain('Por volumen')
-    expect(html).toContain('Demo')
+    expect(html).toContain('Producto demo')
     expect(html).not.toContain('disabled=""')
   })
   it('da prioridad al producto de discos antes de las marcas y destacados', () => {

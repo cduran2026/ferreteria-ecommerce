@@ -1,0 +1,336 @@
+{
+  "pages": [
+    {
+      "overflow": false,
+      "path": "/",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 360
+    },
+    {
+      "overflow": false,
+      "path": "/catalogo",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 360
+    },
+    {
+      "overflow": false,
+      "path": "/producto/discos-yts-50",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 360
+    },
+    {
+      "overflow": false,
+      "path": "/producto/taladro",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 360
+    },
+    {
+      "overflow": false,
+      "path": "/carrito",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 360
+    },
+    {
+      "overflow": false,
+      "path": "/admin",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 360
+    },
+    {
+      "overflow": false,
+      "path": "/admin/inventario",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 360
+    },
+    {
+      "overflow": false,
+      "path": "/",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 390
+    },
+    {
+      "overflow": false,
+      "path": "/catalogo",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 390
+    },
+    {
+      "overflow": false,
+      "path": "/producto/discos-yts-50",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 390
+    },
+    {
+      "overflow": false,
+      "path": "/producto/taladro",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 390
+    },
+    {
+      "overflow": false,
+      "path": "/carrito",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 390
+    },
+    {
+      "overflow": false,
+      "path": "/admin",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 390
+    },
+    {
+      "overflow": false,
+      "path": "/admin/inventario",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 390
+    },
+    {
+      "overflow": false,
+      "path": "/",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 430
+    },
+    {
+      "overflow": false,
+      "path": "/catalogo",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 430
+    },
+    {
+      "overflow": false,
+      "path": "/producto/discos-yts-50",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 430
+    },
+    {
+      "overflow": false,
+      "path": "/producto/taladro",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 430
+    },
+    {
+      "overflow": false,
+      "path": "/carrito",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 430
+    },
+    {
+      "overflow": false,
+      "path": "/admin",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 430
+    },
+    {
+      "overflow": false,
+      "path": "/admin/inventario",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 430
+    },
+    {
+      "overflow": false,
+      "path": "/",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 768
+    },
+    {
+      "overflow": false,
+      "path": "/catalogo",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 768
+    },
+    {
+      "overflow": false,
+      "path": "/producto/discos-yts-50",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 768
+    },
+    {
+      "overflow": false,
+      "path": "/producto/taladro",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 768
+    },
+    {
+      "overflow": false,
+      "path": "/carrito",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 768
+    },
+    {
+      "overflow": false,
+      "path": "/admin",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 768
+    },
+    {
+      "overflow": false,
+      "path": "/admin/inventario",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 768
+    },
+    {
+      "overflow": false,
+      "path": "/",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1024
+    },
+    {
+      "overflow": false,
+      "path": "/catalogo",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1024
+    },
+    {
+      "overflow": false,
+      "path": "/producto/discos-yts-50",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1024
+    },
+    {
+      "overflow": false,
+      "path": "/producto/taladro",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1024
+    },
+    {
+      "overflow": false,
+      "path": "/carrito",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1024
+    },
+    {
+      "overflow": false,
+      "path": "/admin",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1024
+    },
+    {
+      "overflow": false,
+      "path": "/admin/inventario",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1024
+    },
+    {
+      "overflow": false,
+      "path": "/",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1440
+    },
+    {
+      "overflow": false,
+      "path": "/catalogo",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1440
+    },
+    {
+      "overflow": false,
+      "path": "/producto/discos-yts-50",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1440
+    },
+    {
+      "overflow": false,
+      "path": "/producto/taladro",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1440
+    },
+    {
+      "overflow": false,
+      "path": "/carrito",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1440
+    },
+    {
+      "overflow": false,
+      "path": "/admin",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1440
+    },
+    {
+      "overflow": false,
+      "path": "/admin/inventario",
+      "smallActions": false,
+      "smallAvailability": false,
+      "width": 1440
+    }
+  ],
+  "assistant": [
+    {
+      "inside": true,
+      "overflow": false,
+      "visibleOptions": 6,
+      "width": 360
+    },
+    {
+      "inside": true,
+      "overflow": false,
+      "visibleOptions": 6,
+      "width": 390
+    },
+    {
+      "inside": true,
+      "overflow": false,
+      "visibleOptions": 6,
+      "width": 430
+    },
+    {
+      "inside": true,
+      "overflow": false,
+      "visibleOptions": 6,
+      "width": 768
+    },
+    {
+      "inside": true,
+      "overflow": false,
+      "visibleOptions": 6,
+      "width": 1024
+    },
+    {
+      "inside": true,
+      "overflow": false,
+      "visibleOptions": 6,
+      "width": 1440
+    }
+  ]
+}

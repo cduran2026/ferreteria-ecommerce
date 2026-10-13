@@ -6,9 +6,9 @@ export function WholesaleSection() {
       <div>
         <span className="sf-eyebrow">PARA TU NEGOCIO O TU PRÓXIMA OBRA</span>
         <h2>
-          Mientras más compras,
+          Precios por volumen,
           <br />
-          mejor precio.
+          según tu producto.
         </h2>
         <p>
           Algunos productos tienen precios por cantidad. Elige tu presentación y

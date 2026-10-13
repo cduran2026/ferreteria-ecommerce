@@ -75,8 +75,7 @@ export const products: DemoProduct[] = [
     category: 'Fijaciones',
     image: '',
     stock: 2400,
-    description:
-      'Fijación de ejemplo. El inventario se expresa en tornillos como unidad base.',
+    description: 'Tornillos de ejemplo para fijaciones en madera.',
     presentations: [
       {
         id: 'unidad',

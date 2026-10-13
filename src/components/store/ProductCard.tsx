@@ -1,3 +1,4 @@
+import { presentationCount } from '../../services/commercialCopy'
 import { Link } from 'react-router-dom'
 import type { Product } from '../../types/catalog'
 import { money } from '../../services/catalog'
@@ -18,7 +19,7 @@ export function ProductCard({ product }: { product: Product }) {
       </Link>
       <div className="sf-product-content">
         <span className="sf-product-category">
-          {product.brand ?? 'Ejemplo sin marca'}
+          {product.brand ?? 'Producto demo'}
         </span>
         <Link className="sf-product-name" to={`/producto/${product.id}`}>
           <h3>{product.name}</h3>
@@ -32,14 +33,15 @@ export function ProductCard({ product }: { product: Product }) {
             <>
               <span>Por volumen: {money(pricing.volume.price)}</span>
               <small>
-                Desde {pricing.volume.minQuantity} presentaciones · Demo
+                Desde{' '}
+                {presentationCount(presentation, pricing.volume.minQuantity)}
               </small>
             </>
           ) : (
             <small>
               {product.dataKind === 'reference'
-                ? 'Condiciones comerciales pendientes'
-                : 'Precio de ejemplo · Sin venta real'}
+                ? 'Precio y stock por confirmar'
+                : 'Precio demostrativo'}
             </small>
           )}
         </div>
@@ -51,24 +53,29 @@ export function ProductCard({ product }: { product: Product }) {
               : 'Disponible en demo'}
         </small>
         <div className="sf-product-actions">
-          <Button
-            disabled={!pricing.purchasable}
-            aria-label={`Agregar ${product.name} al carrito`}
-            onClick={() =>
-              add({
-                productId: product.id,
-                presentationId: presentation.id,
-                quantity: 1,
-              })
-            }
-          >
-            <Icon name="plus" />
-            Agregar
-          </Button>
+          {pricing.purchasable && (
+            <Button
+              aria-label={`Agregar ${product.name} al carrito`}
+              onClick={() =>
+                add({
+                  productId: product.id,
+                  presentationId: presentation.id,
+                  quantity: 1,
+                })
+              }
+            >
+              <Icon name="plus" />
+              Agregar
+            </Button>
+          )}
           <Link
             to={`/producto/${product.id}`}
-            aria-label={`Ver detalles de ${product.name}`}
+            className={
+              pricing.purchasable ? undefined : 'button sf-view-product'
+            }
+            aria-label={`Ver producto: ${product.name}`}
           >
+            {!pricing.purchasable && 'Ver producto'}
             <Icon name="arrow" />
           </Link>
         </div>

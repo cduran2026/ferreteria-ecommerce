@@ -1,3 +1,8 @@
+import {
+  contentsCount,
+  presentationCount,
+  equivalenceCopy,
+} from '../../services/commercialCopy'
 import { ProductMedia } from '../../components/store/ProductMedia'
 import { Link } from 'react-router-dom'
 import { useCart } from './useCart'
@@ -9,8 +14,7 @@ import { Button } from '../../components/ui'
 export function CartPage() {
   const { lines, update, remove } = useCart()
   const quotes = cartQuotes(lines),
-    total = quotes.reduce((n, q) => n + q.total, 0),
-    units = quotes.reduce((n, q) => n + q.units, 0)
+    total = quotes.reduce((n, q) => n + q.total, 0)
   return (
     <div className="sf-container sf-page">
       <p className="sf-breadcrumb">
@@ -57,11 +61,12 @@ export function CartPage() {
                     <h2>{q.product.name}</h2>
                   </Link>
                   <p>
-                    {q.presentation.label} · {q.presentation.baseUnits} unidades
-                    base por presentación
+                    {q.presentation.label} ·{' '}
+                    {contentsCount(q.product, q.presentation.baseUnits)}
                   </p>
                   <span className="sf-cart-unit-price">
-                    {money(q.price)} por presentación
+                    {money(q.price)} por{' '}
+                    {presentationCount(q.presentation, 1).slice(2)}
                   </span>
                   <div className="sf-cart-controls">
                     <QuantityControl
@@ -81,8 +86,12 @@ export function CartPage() {
                     </Button>
                   </div>
                   <small>
-                    {q.units} unidades equivalentes · Precio recalculado por
-                    volumen
+                    {equivalenceCopy(
+                      q.product,
+                      q.presentation,
+                      q.quantity,
+                      q.units,
+                    )}
                   </small>
                 </div>
                 <strong className="sf-cart-subtotal">
@@ -98,12 +107,14 @@ export function CartPage() {
           <aside className="sf-cart-summary">
             <h2>Resumen de tu selección</h2>
             <div>
-              <span>Presentaciones</span>
+              <span>Artículos y paquetes</span>
               <strong>{quotes.reduce((n, q) => n + q.quantity, 0)}</strong>
             </div>
             <div>
-              <span>Unidades equivalentes</span>
-              <strong>{units}</strong>
+              <span>Productos diferentes</span>
+              <strong>
+                {new Set(lines.map((line) => line.productId)).size}
+              </strong>
             </div>
             <div>
               <span>Subtotal</span>

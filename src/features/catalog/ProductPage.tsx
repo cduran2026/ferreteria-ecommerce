@@ -1,3 +1,8 @@
+import {
+  contentsCount,
+  presentationCount,
+  equivalenceCopy,
+} from '../../services/commercialCopy'
 import { ProductMedia } from '../../components/store/ProductMedia'
 import { ProductPrice } from '../../components/store/ProductPrice'
 import { useState } from 'react'
@@ -86,12 +91,6 @@ function ProductDetail({ product: p }: { product: Product }) {
               <ProductMedia product={p} />
             </div>
           )}
-          <div className="sf-gallery-bottom">
-            <span>
-              Fotografías autorizadas pendientes. No se usan imágenes de
-              terceros.
-            </span>
-          </div>
         </section>
         <section
           className="sf-buy-panel"
@@ -111,8 +110,7 @@ function ProductDetail({ product: p }: { product: Product }) {
             />
           </div>
           <p className="sf-detail-equivalence">
-            {presentation.label}: {presentation.baseUnits}{' '}
-            {p.baseUnit ?? 'unidades base'}.{' '}
+            {presentation.label}: {contentsCount(p, presentation.baseUnits)}.{' '}
             {presentation.baseUnits > 1 && presentation.price !== null && (
               <span>
                 Equivalente aproximado:{' '}
@@ -120,14 +118,14 @@ function ProductDetail({ product: p }: { product: Product }) {
                   (pricing?.price ?? presentation.price) /
                     presentation.baseUnits,
                 )}{' '}
-                por unidad base.
+                por {contentsCount(p, 1).slice(2)}.
               </span>
             )}
           </p>
           <p className="sf-demo-stock">
             {p.stock === null
               ? 'Disponibilidad pendiente de confirmar'
-              : `Stock de ejemplo: ${p.stock} unidades base · Demo`}
+              : `Disponible en demo: ${contentsCount(p, p.stock)}`}
           </p>
           <fieldset className="sf-presentations">
             <legend>Elige tu presentación</legend>
@@ -148,56 +146,16 @@ function ProductDetail({ product: p }: { product: Product }) {
                   }}
                 />
                 <strong>{x.label}</strong>
-                <small>
-                  {x.baseUnits}{' '}
-                  {x.baseUnits === 1 ? 'unidad base' : 'unidades base'}
-                </small>
+                <small>{contentsCount(p, x.baseUnits)}</small>
                 <span>
                   {x.price === null ? 'Precio pendiente' : money(x.price)}
                 </span>
               </label>
             ))}
           </fieldset>
-          {tiers.length > 1 && (
-            <section className="sf-price-tiers" aria-labelledby="tier-title">
-              <h2 id="tier-title">
-                <Icon name="box" />
-                Tu precio mejora con la cantidad
-              </h2>
-              <p>Cantidades de la presentación seleccionada.</p>
-              <div className="sf-tier-grid">
-                {tiers.map((tier, i) => {
-                  const next = tiers[i + 1]?.minQuantity
-                  const active =
-                    pricing &&
-                    quantity >= tier.minQuantity &&
-                    (!next || quantity < next)
-                  return (
-                    <button
-                      key={tier.minQuantity}
-                      className={active ? 'is-applied' : ''}
-                      onClick={() => {
-                        setQuantity(tier.minQuantity)
-                        setAdded(false)
-                      }}
-                      aria-pressed={Boolean(active)}
-                    >
-                      <small>
-                        {next
-                          ? `${tier.minQuantity} a ${next - 1}`
-                          : `${tier.minQuantity} o más`}
-                      </small>
-                      <strong>{money(tier.price)}</strong>
-                      <span>por presentación</span>
-                    </button>
-                  )
-                })}
-              </div>
-            </section>
-          )}
           <div className="sf-quantity-row">
             <span id="product-quantity-heading">
-              Cantidad de presentaciones
+              Cantidad de {presentationCount(presentation, 2).slice(2)}
             </span>
             <QuantityControl
               value={quantity}
@@ -235,8 +193,12 @@ function ProductDetail({ product: p }: { product: Product }) {
               <strong>{presentation.label}</strong>
             </div>
             <div>
-              <span>Unidades equivalentes</span>
-              <strong>{equivalentUnits ?? '—'}</strong>
+              <span>Contenido total</span>
+              <strong>
+                {equivalentUnits
+                  ? equivalenceCopy(p, presentation, quantity, equivalentUnits)
+                  : '—'}
+              </strong>
             </div>
             <div>
               <span>Precio aplicado</span>
@@ -244,8 +206,8 @@ function ProductDetail({ product: p }: { product: Product }) {
             </div>
             <div className="sf-summary-total">
               <span>
-                Total · {quantity || '—'}{' '}
-                {quantity === 1 ? 'presentación' : 'presentaciones'}
+                Total ·{' '}
+                {quantity ? presentationCount(presentation, quantity) : '—'}
               </span>
               <strong>{pricing ? money(pricing.total) : '—'}</strong>
             </div>
@@ -279,9 +241,47 @@ function ProductDetail({ product: p }: { product: Product }) {
           )}
           <p className="sf-purchase-note">
             <Icon name="shield" />
-            Compra demostrativa. No se generan pedidos ni se descuenta
-            inventario.
+            Demostración · Sin pagos ni pedidos reales.
           </p>
+          {tiers.length > 1 && (
+            <section className="sf-price-tiers" aria-labelledby="tier-title">
+              <h2 id="tier-title">
+                <Icon name="box" />
+                Tu precio mejora con la cantidad
+              </h2>
+              <p>Precio por {presentationCount(presentation, 1).slice(2)}.</p>
+              <div className="sf-tier-grid">
+                {tiers.map((tier, i) => {
+                  const next = tiers[i + 1]?.minQuantity
+                  const active =
+                    pricing &&
+                    quantity >= tier.minQuantity &&
+                    (!next || quantity < next)
+                  return (
+                    <button
+                      key={tier.minQuantity}
+                      className={active ? 'is-applied' : ''}
+                      onClick={() => {
+                        setQuantity(tier.minQuantity)
+                        setAdded(false)
+                      }}
+                      aria-pressed={Boolean(active)}
+                    >
+                      <small>
+                        {next
+                          ? `${tier.minQuantity} a ${next - 1}`
+                          : `${tier.minQuantity} o más`}
+                      </small>
+                      <strong>{money(tier.price)}</strong>
+                      <span>
+                        por {presentationCount(presentation, 1).slice(2)}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+            </section>
+          )}
         </section>
       </div>
       <section className="sf-product-description">
@@ -307,7 +307,10 @@ function ProductDetail({ product: p }: { product: Product }) {
         </div>
         <div>
           <span>Equivalencias</span>
-          <strong>Según cada presentación, en unidades base.</strong>
+          <strong>
+            {contentsCount(p, presentation.baseUnits)} por{' '}
+            {presentationCount(presentation, 1).slice(2)}.
+          </strong>
         </div>
       </section>
       {related.length > 0 && (
