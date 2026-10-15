@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { requestServerQuote } from '../../services/serverQuote'
+import { useCatalog } from '../catalog/context'
 import {
   contentsCount,
   presentationCount,
@@ -12,8 +15,33 @@ import { Icon } from '../../components/store/Icon'
 import { QuantityControl } from '../../components/store/QuantityControl'
 import { Button } from '../../components/ui'
 export function CartPage() {
+  const { products: storeProducts, mode } = useCatalog()
   const { lines, update, remove } = useCart()
-  const quotes = cartQuotes(lines),
+  const [checking, setChecking] = useState(false),
+    [verified, setVerified] = useState({ fingerprint: '', message: '' })
+  const fingerprint = JSON.stringify(lines)
+  const check = async () => {
+    setChecking(true)
+    try {
+      const result = await requestServerQuote(lines)
+      setVerified({
+        fingerprint,
+        message:
+          'Selección validada en servidor: ' +
+          money(result.total_clp) +
+          '. No reserva stock ni habilita la compra.',
+      })
+    } catch (e) {
+      setVerified({
+        fingerprint,
+        message:
+          e instanceof Error ? e.message : 'No pudimos verificar la selección.',
+      })
+    } finally {
+      setChecking(false)
+    }
+  }
+  const quotes = cartQuotes(lines, storeProducts),
     total = quotes.reduce((n, q) => n + q.total, 0)
   return (
     <div className="sf-container sf-page">
@@ -121,14 +149,32 @@ export function CartPage() {
               <strong>{money(total)}</strong>
             </div>
             <div className="sf-summary-total">
-              <span>Total demostrativo</span>
+              <span>
+                {mode === 'demo' ? 'Total demostrativo' : 'Total de referencia'}
+              </span>
               <strong>{money(total)}</strong>
             </div>
+            {mode === 'supabase' && (
+              <>
+                <Button
+                  className="secondary"
+                  disabled={checking}
+                  onClick={() => void check()}
+                >
+                  {checking ? 'Verificando…' : 'Verificar valores en servidor'}
+                </Button>
+                {verified.fingerprint === fingerprint && (
+                  <p className="sf-server-quote" role="status">
+                    {verified.message}
+                  </p>
+                )}
+              </>
+            )}
             <Button disabled>Compra aún no habilitada</Button>
             <p>
               <Icon name="shield" />
-              Este carrito es una demostración. No hay pagos, pedidos, reservas
-              ni descuentos de stock.
+              Este carrito no genera pagos, pedidos, reservas ni descuentos de
+              stock.
             </p>
             <small>
               Los productos se conservan sólo en este navegador. No se han

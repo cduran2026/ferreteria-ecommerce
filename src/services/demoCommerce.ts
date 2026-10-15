@@ -5,7 +5,14 @@ export function tiersFor(presentation: Presentation): PriceTier[] {
   const tiers = presentation.tiers ?? [
     { minQuantity: 1, price: presentation.price! },
   ]
-  return [...tiers].sort((a, b) => a.minQuantity - b.minQuantity)
+  const now = new Date()
+  return [...tiers]
+    .filter(
+      (t) =>
+        (!t.validFrom || new Date(t.validFrom) <= now) &&
+        (!t.validUntil || new Date(t.validUntil) > now),
+    )
+    .sort((a, b) => a.minQuantity - b.minQuantity)
 }
 export function appliedPrice(presentation: Presentation, quantity: number) {
   if (!Number.isSafeInteger(quantity) || quantity < 1)
@@ -34,7 +41,7 @@ export function quote(
   if (!Number.isSafeInteger(total))
     throw new Error('Total fuera del rango permitido.')
   if (units > product.stock)
-    throw new Error('La cantidad supera el stock de demostración.')
+    throw new Error('La cantidad supera el stock disponible.')
   return { presentation, quantity, units, price, total }
 }
 export interface CartLine {
@@ -45,21 +52,28 @@ export interface CartLine {
 export function lineKey(line: Pick<CartLine, 'productId' | 'presentationId'>) {
   return `${line.productId}:${line.presentationId}`
 }
-function verifyCart(lines: CartLine[]) {
+export function verifyCart(
+  lines: CartLine[],
+  catalog: Product[] = storeProducts,
+) {
   const totals = new Map<string, number>()
   for (const line of lines) {
-    const p = storeProducts.find((p) => p.id === line.productId)
+    const p = catalog.find((p) => p.id === line.productId)
     if (!p) throw new Error('Producto no disponible.')
     const q = quote(p, line.presentationId, line.quantity)
     totals.set(p.id, (totals.get(p.id) ?? 0) + q.units)
     if (p.stock !== null && totals.get(p.id)! > p.stock)
       throw new Error(
-        'Superas el stock de demostración entre las presentaciones de este producto.',
+        'Superas el stock disponible entre las presentaciones de este producto.',
       )
   }
   return lines
 }
-export function addToCart(lines: CartLine[], newLine: CartLine) {
+export function addToCart(
+  lines: CartLine[],
+  newLine: CartLine,
+  catalog: Product[] = storeProducts,
+) {
   const existing = lines.find((l) => lineKey(l) === lineKey(newLine))
   if (!Number.isSafeInteger(newLine.quantity) || newLine.quantity < 1)
     throw new Error('Cantidad inválida.')
@@ -70,21 +84,31 @@ export function addToCart(lines: CartLine[], newLine: CartLine) {
           : l,
       )
     : [...lines, { ...newLine }]
-  return verifyCart(next)
+  return verifyCart(next, catalog)
 }
-export function updateCart(lines: CartLine[], key: string, quantity: number) {
+export function updateCart(
+  lines: CartLine[],
+  key: string,
+  quantity: number,
+  catalog: Product[] = storeProducts,
+) {
   if (!lines.some((l) => lineKey(l) === key))
     throw new Error('Línea no disponible.')
   return verifyCart(
     lines.map((l) => (lineKey(l) === key ? { ...l, quantity } : l)),
+    catalog,
   )
 }
 export function removeFromCart(lines: CartLine[], key: string) {
   return lines.filter((l) => lineKey(l) !== key)
 }
-export function cartQuotes(lines: CartLine[]) {
+export function cartQuotes(
+  lines: CartLine[],
+  catalog: Product[] = storeProducts,
+) {
   return lines.map((line) => {
-    const product = storeProducts.find((p) => p.id === line.productId)!
+    const product = catalog.find((p) => p.id === line.productId)
+    if (!product) throw new Error('Producto no disponible.')
     return {
       line,
       product,
@@ -92,7 +116,10 @@ export function cartQuotes(lines: CartLine[]) {
     }
   })
 }
-export function restoreCart(raw: string | null): CartLine[] {
+export function restoreCart(
+  raw: string | null,
+  catalog: Product[] = storeProducts,
+): CartLine[] {
   if (!raw) return []
   try {
     const parsed: unknown = JSON.parse(raw)
@@ -117,7 +144,7 @@ export function restoreCart(raw: string | null): CartLine[] {
         quantity: item.quantity,
       })
     }
-    return verifyCart(lines)
+    return verifyCart(lines, catalog)
   } catch {
     return []
   }
@@ -160,8 +187,11 @@ export function cardPricing(product: Product) {
   return { price, availability: state, volume, purchasable }
 }
 
-export function restoredCartState(raw: string | null) {
-  const lines = restoreCart(raw)
+export function restoredCartState(
+  raw: string | null,
+  catalog: Product[] = storeProducts,
+) {
+  const lines = restoreCart(raw, catalog)
   let hadItems: boolean
   try {
     const parsed: unknown = raw ? JSON.parse(raw) : []

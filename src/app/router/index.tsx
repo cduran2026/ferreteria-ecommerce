@@ -1,3 +1,9 @@
+import { AuthPage } from '../../features/auth/Pages'
+import { ProtectedRoute } from '../../features/auth/ProtectedRoute'
+import {
+  CatalogAdminPage,
+  ProductAdminPage,
+} from '../../features/admin/LazyPages'
 import { NavigationLayout } from '../layouts/NavigationLayout'
 import { CartPage } from '../../features/cart/CartPage'
 import { RouteError } from '../../components/ui/RouteError'
@@ -13,12 +19,14 @@ import {
   DashboardPage,
   InventoryPage,
   ModulePage,
-} from '../../features/admin/Pages'
+} from '../../features/admin/LazyPages'
 import { EmptyState } from '../../components/ui'
 export const router = createBrowserRouter([
   {
     element: <NavigationLayout />,
     children: [
+      { path: '/login', element: <AuthPage /> },
+      { path: '/restablecer', element: <AuthPage recovery /> },
       {
         element: <StoreLayout />,
         errorElement: <RouteError />,
@@ -43,13 +51,27 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: '/admin',
-        element: <AdminLayout />,
-        errorElement: <RouteError />,
+        element: <ProtectedRoute />,
         children: [
-          { index: true, element: <DashboardPage /> },
-          { path: 'inventario', element: <InventoryPage /> },
-          { path: 'modulo/:module', element: <ModulePage /> },
+          {
+            path: '/admin',
+            element: <AdminLayout />,
+            errorElement: <RouteError />,
+            children: [
+              { index: true, element: <DashboardPage /> },
+              { path: 'inventario', element: <InventoryPage /> },
+              {
+                path: 'productos',
+                element: <CatalogAdminPage table="products" />,
+              },
+              {
+                path: 'categorias',
+                element: <CatalogAdminPage table="categories" />,
+              },
+              { path: 'productos/:id', element: <ProductAdminPage /> },
+              { path: 'modulo/:module', element: <ModulePage /> },
+            ],
+          },
         ],
       },
     ],

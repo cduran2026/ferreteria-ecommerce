@@ -1,3 +1,4 @@
+import { useCatalog } from './context'
 import {
   contentsCount,
   presentationCount,
@@ -7,7 +8,7 @@ import { ProductMedia } from '../../components/store/ProductMedia'
 import { ProductPrice } from '../../components/store/ProductPrice'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { storeProducts, money, baseQuantity } from '../../services/catalog'
+import { money, baseQuantity } from '../../services/catalog'
 import type { Product } from '../../types/catalog'
 import { quote, tiersFor } from '../../services/demoCommerce'
 import { useCart } from '../cart/useCart'
@@ -16,6 +17,7 @@ import { Icon } from '../../components/store/Icon'
 import { QuantityControl } from '../../components/store/QuantityControl'
 import { ProductCard } from '../../components/store/ProductCard'
 export function ProductPage() {
+  const { products: storeProducts } = useCatalog()
   const { id } = useParams()
   const product = storeProducts.find((p) => p.id === id)
   return product ? (
@@ -30,12 +32,42 @@ export function ProductPage() {
   )
 }
 function ProductDetail({ product: p }: { product: Product }) {
+  const { products: storeProducts } = useCatalog()
+  return p.presentations.length ? (
+    <ConfiguredProduct
+      key={p.presentations.map((x) => x.id).join(':')}
+      product={p}
+      catalog={storeProducts}
+    />
+  ) : (
+    <div className="sf-container sf-page">
+      <h1>{p.name}</h1>
+      <ProductMedia product={p} />
+      <p>{p.description}</p>
+      <p role="status">
+        Presentaciones y precios pendientes de confirmación. Compra no
+        disponible.
+      </p>
+      <Link to="/catalogo">Volver al catálogo</Link>
+    </div>
+  )
+}
+function ConfiguredProduct({
+  product: p,
+  catalog: storeProducts,
+}: {
+  product: Product
+  catalog: Product[]
+}) {
   const [presentationId, setPresentation] = useState(p.presentations[0].id),
     [quantity, setQuantity] = useState(1),
     [zoom, setZoom] = useState(false),
+    [imageId, setImageId] = useState(''),
     [added, setAdded] = useState(false)
   const { add } = useCart()
   const presentation = p.presentations.find((x) => x.id === presentationId)!
+  const activeImage = p.images?.find((i) => i.id === imageId)
+  const media = activeImage ? { ...p, image: activeImage.url } : p
   const tiers = tiersFor(presentation)
   let pricing: ReturnType<typeof quote> | null = null,
     error = ''
@@ -80,7 +112,7 @@ function ProductDetail({ product: p }: { product: Product }) {
                 aria-pressed={zoom}
                 onClick={() => setZoom(!zoom)}
               >
-                <ProductMedia product={p} priority />
+                <ProductMedia product={media} priority />
               </button>
               <Button className="sf-link-button" onClick={() => setZoom(!zoom)}>
                 {zoom ? 'Vista completa' : 'Ver detalle'}
@@ -91,16 +123,39 @@ function ProductDetail({ product: p }: { product: Product }) {
               <ProductMedia product={p} />
             </div>
           )}
+          {(p.images?.length ?? 0) > 1 && (
+            <div className="sf-gallery-thumbnails">
+              {p.images!.map((i) => (
+                <button
+                  key={i.id}
+                  onClick={() => {
+                    setImageId(i.id)
+                    setZoom(false)
+                  }}
+                  aria-label={'Ver ' + i.alt}
+                  aria-pressed={media.image === i.url}
+                >
+                  <img src={i.url} alt={i.alt} width="64" height="64" />
+                </button>
+              ))}
+            </div>
+          )}
         </section>
         <section
           className="sf-buy-panel"
-          aria-label="Configurar compra demostrativa"
+          aria-label={
+            p.dataKind === 'supabase'
+              ? 'Configurar selección de productos'
+              : 'Configurar compra demostrativa'
+          }
         >
           <span className="sf-eyebrow">{p.brand ?? p.category}</span>
           <h1>{p.name}</h1>
           <p className="sf-product-sku">
             {p.sku
-              ? 'SKU ' + p.sku + ' · Ejemplo demo'
+              ? 'SKU ' +
+                p.sku +
+                (p.dataKind === 'supabase' ? '' : ' · Ejemplo demo')
               : 'Referencia comercial · Datos pendientes'}
           </p>
           <div className="sf-detail-price">
@@ -125,7 +180,9 @@ function ProductDetail({ product: p }: { product: Product }) {
           <p className="sf-demo-stock">
             {p.stock === null
               ? 'Disponibilidad pendiente de confirmar'
-              : `Disponible en demo: ${contentsCount(p, p.stock)}`}
+              : (p.dataKind === 'supabase'
+                  ? 'Disponible: '
+                  : 'Disponible en demo: ') + contentsCount(p, p.stock)}
           </p>
           <fieldset className="sf-presentations">
             <legend>Elige tu presentación</legend>
@@ -241,7 +298,7 @@ function ProductDetail({ product: p }: { product: Product }) {
           )}
           <p className="sf-purchase-note">
             <Icon name="shield" />
-            Demostración · Sin pagos ni pedidos reales.
+            Sin pagos ni pedidos reales.
           </p>
           {tiers.length > 1 && (
             <section className="sf-price-tiers" aria-labelledby="tier-title">

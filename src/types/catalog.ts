@@ -1,4 +1,6 @@
 export interface PriceTier {
+  validFrom?: string
+  validUntil?: string | null
   minQuantity: number
   price: number
 }
@@ -29,7 +31,8 @@ export interface Product {
   featured?: boolean
   introducedAt?: string
   baseUnit?: string
-  dataKind?: 'demo' | 'reference'
+  dataKind?: 'demo' | 'reference' | 'supabase'
+  images?: { id: string; url: string; alt: string }[]
   referenceUrl?: string
 }
 export interface DemoProduct extends Product {

@@ -1,3 +1,4 @@
+import type { Product, Category } from '../types/catalog'
 import { storeProducts } from './catalog'
 import { queryCatalog } from './catalogQuery'
 import { brands, categoryTree, catalogHref } from './catalogTaxonomy'
@@ -38,30 +39,34 @@ export function assistantReducer(
       return { ...state, searched: Boolean(state.query.trim()) }
   }
 }
-export function assistantSearch(query: string) {
-  return query.trim() ? queryCatalog(storeProducts, { query }) : []
+export function assistantSearch(
+  query: string,
+  catalog: Product[] = storeProducts,
+) {
+  return query.trim() ? queryCatalog(catalog, { query }) : []
 }
 export function assistantSearchHref(query: string) {
   const params = new URLSearchParams({ q: query.trim() })
   return '/catalogo?' + params.toString()
 }
-export function assistantBrands() {
-  return brands.map((name) => ({
+export function assistantBrands(
+  catalog: Product[] = storeProducts,
+  names: readonly string[] = brands,
+) {
+  return names.map((name) => ({
     name,
-    count: queryCatalog(storeProducts, { brand: name }).length,
+    count: queryCatalog(catalog, { brand: name }).length,
     href: catalogHref({ brand: name }),
   }))
 }
-export function assistantCategories() {
-  const ordered = categoryTree
-    .filter((c) => !c.parent_id)
-    .flatMap((parent) => [
-      parent,
-      ...categoryTree.filter((c) => c.parent_id === parent.id),
-    ])
+export function assistantCategories(
+  catalog: Product[] = storeProducts,
+  tree: Category[] = categoryTree,
+) {
+  const ordered = tree
   return ordered.map((category) => ({
     ...category,
-    count: queryCatalog(storeProducts, { category: category.id }).length,
+    count: queryCatalog(catalog, { category: category.id }, tree).length,
     href: catalogHref({ category: category.id }),
   }))
 }

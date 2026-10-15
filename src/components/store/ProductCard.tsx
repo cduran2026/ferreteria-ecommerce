@@ -19,7 +19,10 @@ export function ProductCard({ product }: { product: Product }) {
       </Link>
       <div className="sf-product-content">
         <span className="sf-product-category">
-          {product.brand ?? 'Producto demo'}
+          {product.brand ??
+            (product.dataKind === 'supabase'
+              ? product.category
+              : 'Producto demo')}
         </span>
         <Link className="sf-product-name" to={`/producto/${product.id}`}>
           <h3>{product.name}</h3>
@@ -41,7 +44,11 @@ export function ProductCard({ product }: { product: Product }) {
             <small>
               {product.dataKind === 'reference'
                 ? 'Precio y stock por confirmar'
-                : 'Precio demostrativo'}
+                : product.dataKind === 'supabase'
+                  ? pricing.price === null
+                    ? 'Precio por confirmar'
+                    : 'Precio vigente · IVA incluido'
+                  : 'Precio demostrativo'}
             </small>
           )}
         </div>
@@ -49,8 +56,12 @@ export function ProductCard({ product }: { product: Product }) {
           {pricing.availability === 'unknown'
             ? 'Disponibilidad por confirmar'
             : pricing.availability === 'unavailable'
-              ? 'Sin disponibilidad demo'
-              : 'Disponible en demo'}
+              ? product.dataKind === 'supabase'
+                ? 'Sin disponibilidad'
+                : 'Sin disponibilidad demo'
+              : product.dataKind === 'supabase'
+                ? 'Disponible'
+                : 'Disponible en demo'}
         </small>
         <div className="sf-product-actions">
           {pricing.purchasable && (

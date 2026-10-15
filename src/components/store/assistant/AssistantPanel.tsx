@@ -1,3 +1,4 @@
+import { useCatalog } from '../../../features/catalog/context'
 import { useEffect, useRef, useState } from 'react'
 import type { Dispatch } from 'react'
 import { Link } from 'react-router-dom'
@@ -34,6 +35,7 @@ export function AssistantPanel({
   onNavigate: () => void
 }) {
   const { lines } = useCart()
+  const { products, brands, categoryTree, mode } = useCatalog()
   const heading = useRef<HTMLHeadingElement>(null)
   useEffect(() => {
     if (state.open) heading.current?.focus()
@@ -42,7 +44,7 @@ export function AssistantPanel({
     storeAssistantConfig.whatsapp.initialMessage,
   )
   const contact = whatsappContactUrl(message)
-  const results = state.searched ? assistantSearch(state.query) : []
+  const results = state.searched ? assistantSearch(state.query, products) : []
   const cart = assistantCartSummary(lines)
   const titles = {
     home: '¿Qué necesitas encontrar hoy?',
@@ -126,7 +128,9 @@ export function AssistantPanel({
                       <small>
                         {product.dataKind === 'reference'
                           ? 'Precio y disponibilidad por confirmar'
-                          : 'Datos demostrativos'}
+                          : product.dataKind === 'supabase'
+                            ? 'Catálogo conectado'
+                            : 'Datos demostrativos'}
                       </small>
                     </span>
                     <Icon name="arrow" />
@@ -145,7 +149,7 @@ export function AssistantPanel({
         )}
         {state.view === 'categories' && (
           <div className="sf-assistant-options">
-            {assistantCategories().map((category) => (
+            {assistantCategories(products, categoryTree).map((category) => (
               <Link
                 className={category.parent_id ? 'is-child' : ''}
                 key={category.id}
@@ -173,7 +177,7 @@ export function AssistantPanel({
               ni stock confirmado.
             </p>
             <div className="sf-assistant-options">
-              {assistantBrands().map((brand) => (
+              {assistantBrands(products, brands).map((brand) => (
                 <Link key={brand.name} to={brand.href} onClick={onNavigate}>
                   <Icon name="tag" />
                   <span>
@@ -212,9 +216,9 @@ export function AssistantPanel({
               </dd>
             </dl>
             <p className="sf-assistant-note">
-              Sin descuentos universales. Las referencias sin precio o
-              disponibilidad no se pueden agregar; los ejemplos permiten probar
-              el carrito.
+              {mode === 'demo'
+                ? 'Sin descuentos universales. Las referencias sin precio o disponibilidad no se pueden agregar; los ejemplos permiten probar el carrito.'
+                : 'Sólo puedes agregar productos con precio y disponibilidad confirmados. El carrito no reserva stock ni genera pedidos.'}
             </p>
             <Link
               className="sf-assistant-primary"
@@ -232,12 +236,15 @@ export function AssistantPanel({
               <p>
                 {cart.products
                   ? `${cart.products} ${cart.products === 1 ? 'producto' : 'productos'} · ${cart.presentations} ${cart.presentations === 1 ? 'combinación de producto/presentación' : 'combinaciones de producto/presentación'} · ${cart.quantity} ${cart.quantity === 1 ? 'presentación' : 'presentaciones'} en total.`
-                  : 'Tu carrito de demostración está vacío.'}
+                  : mode === 'demo'
+                    ? 'Tu carrito de demostración está vacío.'
+                    : 'Tu carrito está vacío.'}
               </p>
             </div>
             <p className="sf-assistant-note">
-              Revisa cantidades, contenido y total en tu carrito de
-              demostración.
+              {mode === 'demo'
+                ? 'Revisa cantidades, contenido y total en tu carrito de demostración.'
+                : 'Revisa cantidades, contenido y total. Los valores deben validarse en servidor antes de operar una compra.'}
             </p>
             <Link
               className="sf-assistant-primary"
@@ -293,7 +300,9 @@ export function AssistantPanel({
         )}
       </div>
       <div className="sf-assistant-disclaimer">
-        Orientación de demostración · Sin precios ni stock reales conectados.
+        {mode === 'demo'
+          ? 'Orientación de demostración · Sin precios ni stock reales conectados.'
+          : 'Asistente guiado · Catálogo local conectado · Sin compra real.'}
       </div>
     </>
   )

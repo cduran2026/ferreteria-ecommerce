@@ -1,13 +1,10 @@
 import { NavLink, Link } from 'react-router-dom'
-const modules = [
-  'Productos',
-  'Categorías',
-  'Ingreso de mercadería',
-  'Ventas',
-  'Pedidos',
-  'Configuración',
-]
+import { useAuth } from '../../features/auth/useAuth'
+import { requireClient } from '../../lib/supabase'
+import { Button } from '../ui'
+const modules = ['Ingreso de mercadería', 'Ventas', 'Pedidos', 'Configuración']
 export function Sidebar() {
+  const { role } = useAuth()
   return (
     <aside className="sidebar">
       <Link className="brand" to="/">
@@ -21,10 +18,16 @@ export function Sidebar() {
         <NavLink to="/admin" end>
           ▦ Dashboard
         </NavLink>
-        <NavLink to="/admin/inventario">▤ Inventario</NavLink>
+        {role === 'admin' && (
+          <>
+            <NavLink to="/admin/productos">Productos</NavLink>
+            <NavLink to="/admin/categorias">Categorías</NavLink>
+          </>
+        )}
+        <NavLink to="/admin/inventario">Inventario · Consulta</NavLink>
         {modules.map((m) => (
           <NavLink key={m} to={`/admin/modulo/${encodeURIComponent(m)}`}>
-            {m}
+            {m} · Pendiente
           </NavLink>
         ))}
       </nav>
@@ -35,18 +38,33 @@ export function Sidebar() {
   )
 }
 export function Header({ title }: { title: string }) {
+  const { role, refresh } = useAuth()
   return (
     <header className="admin-header">
       <div>
-        <small>Administración / Vista demostrativa</small>
+        <small>Administración · Entorno local</small>
         <h1>{title}</h1>
       </div>
-      <span className="user-chip">
-        AD{' '}
-        <span>
-          Usuario demo<small>Sin autenticación</small>
-        </span>
-      </span>
+      <div className="header-actions">
+        <span>{role === 'admin' ? 'Administrador' : 'Operador'}</span>
+        <Button
+          className="secondary"
+          onClick={() => {
+            void refresh()
+          }}
+        >
+          Actualizar permisos
+        </Button>
+        <Button
+          className="secondary"
+          onClick={async () => {
+            await requireClient().auth.signOut()
+            await refresh()
+          }}
+        >
+          Cerrar sesión
+        </Button>
+      </div>
     </header>
   )
 }

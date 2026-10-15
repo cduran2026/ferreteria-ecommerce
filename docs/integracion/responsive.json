@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-15",
+  "method": "Navegador integrado: carga de contenido y medición DOM de scrollWidth contra ancho solicitado",
+  "widths": [360, 390, 430, 768, 1024, 1440],
+  "connected": {
+    "base": "http://127.0.0.1:61380",
+    "routes": [
+      "/",
+      "/catalogo",
+      "/producto/a2000000-0000-0000-0000-000000000001",
+      "/carrito",
+      "/login"
+    ],
+    "checks": 30,
+    "passed": 30,
+    "horizontalOverflow": 0
+  },
+  "demo": {
+    "base": "http://127.0.0.1:61381",
+    "routes": [
+      "/",
+      "/catalogo",
+      "/producto/discos-yts-50",
+      "/carrito",
+      "/admin"
+    ],
+    "checks": 30,
+    "passed": 30,
+    "horizontalOverflow": 0
+  },
+  "functional": [
+    "Ficha desde catálogo: scroll=0 y foco en h1",
+    "Regreso al catálogo: scroll=1314 y foco en producto original",
+    "3 unidades: precio 64990; total 194970; servidor coincide",
+    "Carrito restaurado tras recarga",
+    "Asistente busca el mismo catálogo; Escape cierra dialog y devuelve foco",
+    "Categoría, marca y precio persistentes tras recarga",
+    "Admin edita, operador consulta inventario pero no edita catálogo, cliente bloqueado, anónimo a login",
+    "API interrumpida: error explícito y cero tarjetas; recuperación mediante Reintentar"
+  ]
+}

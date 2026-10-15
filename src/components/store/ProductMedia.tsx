@@ -11,7 +11,10 @@ export function ProductMedia({
   return product.image ? (
     <img
       src={product.image}
-      alt={product.name}
+      alt={
+        product.images?.find((i) => i.url === product.image)?.alt ||
+        product.name
+      }
       width="360"
       height="360"
       loading={priority ? 'eager' : 'lazy'}

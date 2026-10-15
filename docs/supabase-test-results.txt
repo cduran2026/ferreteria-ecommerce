@@ -1,0 +1,63 @@
+PASS: Auth login real y JWT verificado
+PASS: Contraseña inválida rechazada
+PASS: Sesión disponible
+PASS: Anónimo lee categorías públicas
+PASS: Anónimo lee productos publicados
+PASS: Anónimo bloqueado en receipt_item_costs
+PASS: Anónimo bloqueado en inventory_balances
+PASS: Anónimo bloqueado en orders
+PASS: Anónimo no crea producto
+PASS: Cliente no escribe precios
+PASS: Cliente no escribe saldo
+PASS: Cliente no se asigna rol
+PASS: Metadata admin no concede rol
+PASS: Operador no administra roles
+PASS: Operador no lee costos
+PASS: Operador consulta inventario
+PASS: Administrador crea producto por PostgREST
+PASS: Administrador edita y activa producto
+PASS: Administrador administra precios
+PASS: Operador registra borrador por RPC
+PASS: Operador no confirma recepción
+PASS: Administrador confirma recepción
+PASS: Cliente crea pedido autorizado para prueba RPC
+PASS: JWT de otro cliente oculta pedido ajeno
+PASS: Join no filtra detalles privados
+PASS: Navegador no ejecuta RPC de pagos
+PASS: Anónimo no ejecuta RPC privilegiada
+PASS: Columna de perfil restringida
+PASS: Token inválido rechazado por endpoint real
+PASS: Token expirado rechazado por endpoint real
+PASS: Administrador revoca rol
+PASS: Revocación efectiva con el mismo JWT
+PASS: Storage rechaza carga anónima
+PASS: Storage rechaza MIME arbitrario
+PASS: Storage rechaza imagen mayor a 5 MB
+PASS: Administrador sube PNG autorizado
+PASS: Imagen asociada como borrador
+PASS: Borrador no obtiene URL firmada anónima
+PASS: Imagen aprobada obtiene URL firmada
+PASS: Archivo aprobado se descarga por Storage real
+PASS: Bucket privado impide URL pública irrestricta
+PASS: Desaprobación bloquea nuevas URLs
+PASS: JWT conserva identidad real
+PASS: Logout elimina sesión del cliente
+PASS: Anónimo consulta disponibilidad comercial
+PASS: Disponibilidad no expone físico, reservas, costos ni roles
+PASS: Servidor ignora precio manipulado y aplica precio vigente
+PASS: Contrato conserva equivalencias sin habilitar checkout
+PASS: Cotizar no genera pedidos ni reservas
+PASS: Cotizador rechaza cantidad inválida 0
+PASS: Cotizador rechaza cantidad inválida -1
+PASS: Cotizador rechaza cantidad inválida 1.5
+PASS: Cotizador rechaza cantidad inválida 1000000000
+PASS: Cotizador rechaza carrito vacío
+PASS: Cotizador rechaza sobrestock
+PASS: Cotizador acumula disponibilidad del producto entre líneas
+PASS: Operador no modifica catálogo
+PASS: RLS oculta descendientes de categorías inactivas
+PASS: RLS oculta productos bajo ancestros inactivos
+PASS: Disponibilidad respeta publicación jerárquica
+PASS: Cotizador rechaza presentación inactiva
+PASS: Cotizador rechaza presentación sin precio vigente
+62 pruebas reales aprobadas.

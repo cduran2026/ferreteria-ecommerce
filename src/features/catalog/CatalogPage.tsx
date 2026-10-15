@@ -1,16 +1,12 @@
+import { useCatalog } from './context'
 import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { storeProducts } from '../../services/catalog'
-import {
-  brands,
-  categoryTree,
-  rootCategories,
-} from '../../services/catalogTaxonomy'
 import { queryCatalog, readCatalogFilters } from '../../services/catalogQuery'
 import { ProductCard } from '../../components/store/ProductCard'
 import { Icon } from '../../components/store/Icon'
 import { Button, Input, Select } from '../../components/ui'
 export function CatalogPage() {
+  const { products: storeProducts, categoryTree, brands, mode } = useCatalog()
   const [params, setParams] = useSearchParams(),
     [open, setOpen] = useState(false)
   const filters = readCatalogFilters(params)
@@ -20,7 +16,7 @@ export function CatalogPage() {
     else next.delete(key)
     setParams(next, { preventScrollReset: true })
   }
-  const found = queryCatalog(storeProducts, filters)
+  const found = queryCatalog(storeProducts, filters, categoryTree)
   const active = [
     'q',
     'categoria',
@@ -54,8 +50,9 @@ export function CatalogPage() {
         <span className="sf-eyebrow">EXPLORA · COMPARA · ELIGE</span>
         <h1>{title}</h1>
         <p>
-          Referencias comerciales y ejemplos de compra. Precios y stock demo
-          identificados.
+          {mode === 'demo'
+            ? 'Referencias comerciales y ejemplos de compra. Precios y stock demo identificados.'
+            : 'Catálogo de Supabase local. Revisa presentación, precio y disponibilidad; compra aún no habilitada.'}
         </p>
       </div>
       <div className="sf-catalog-layout">
@@ -89,19 +86,12 @@ export function CatalogPage() {
               onChange={(e) => update('categoria', e.target.value)}
             >
               <option value="">Todas las categorías</option>
-              {rootCategories
-                .flatMap((parent) => [
-                  parent,
-                  ...categoryTree.filter(
-                    (child) => child.parent_id === parent.id,
-                  ),
-                ])
-                .map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.parent_id ? '— ' : ''}
-                    {c.name}
-                  </option>
-                ))}
+              {categoryTree.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.parent_id ? '— ' : ''}
+                  {c.name}
+                </option>
+              ))}
             </Select>
           </label>
           <label>
@@ -148,8 +138,14 @@ export function CatalogPage() {
               onChange={(e) => update('disponibilidad', e.target.value)}
             >
               <option value="">Todas</option>
-              <option value="available">Disponible en demo</option>
-              <option value="unavailable">Sin disponibilidad demo</option>
+              <option value="available">
+                {mode === 'demo' ? 'Disponible en demo' : 'Disponible'}
+              </option>
+              <option value="unavailable">
+                {mode === 'demo'
+                  ? 'Sin disponibilidad demo'
+                  : 'Sin disponibilidad'}
+              </option>
               <option value="unknown">Por confirmar</option>
             </Select>
           </label>

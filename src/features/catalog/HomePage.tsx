@@ -1,11 +1,7 @@
+import { useCatalog } from './context'
 import { brandLogos } from '../../config/brandLogos'
 import { Link } from 'react-router-dom'
-import { storeProducts } from '../../services/catalog'
-import {
-  brands,
-  rootCategories,
-  catalogHref,
-} from '../../services/catalogTaxonomy'
+import { catalogHref } from '../../services/catalogTaxonomy'
 import { ProductCard } from '../../components/store/ProductCard'
 import { Icon } from '../../components/store/Icon'
 import { categoryIcon } from '../../components/store/categoryIcons'
@@ -20,9 +16,10 @@ function Shelf({
   id: string
   title: string
   subtitle: string
-  items: typeof storeProducts
+  items: import('../../types/catalog').Product[]
   to: string
 }) {
+  if (!items.length) return null
   return (
     <section className="sf-commercial-shelf" aria-labelledby={id}>
       <div className="sf-section-heading">
@@ -44,11 +41,26 @@ function Shelf({
   )
 }
 export function HomePage() {
-  const discs = storeProducts.filter((p) => p.categoryId === 'discos')
+  const {
+    products: storeProducts,
+    categoryTree,
+    rootCategories,
+    brands,
+    mode,
+  } = useCatalog()
+  const discsId = categoryTree.find((c) => c.slug === 'discos-de-corte')?.id
+  const discs = storeProducts.filter((p) => p.categoryId === discsId)
+  const discsLink = discsId ? catalogHref({ category: discsId }) : '/catalogo'
   const featured = storeProducts.filter(
-    (p) => p.dataKind === 'reference' && p.categoryId !== 'discos',
+    (p) =>
+      (mode === 'supabase' || p.dataKind === 'reference') &&
+      p.categoryId !== discsId,
   )
-  const volume = storeProducts.filter((p) => p.dataKind === 'demo')
+  const volume = storeProducts.filter((p) =>
+    mode === 'demo'
+      ? p.dataKind === 'demo'
+      : p.presentations.some((x) => (x.tiers?.length ?? 0) > 1),
+  )
   return (
     <div className="sf-container sf-commercial-home">
       <section className="sf-promo-strip" aria-labelledby="home-heading">
@@ -60,8 +72,8 @@ export function HomePage() {
             Herramientas y ferretería al detalle y por mayor
           </h1>
         </div>
-        <Link to={catalogHref({ category: 'discos' })} className="button">
-          Explorar discos
+        <Link to={discsLink} className="button">
+          {discsId ? 'Explorar discos' : 'Explorar productos'}
           <Icon name="arrow" />
         </Link>
       </section>
@@ -69,51 +81,59 @@ export function HomePage() {
         id="discs-title"
         title="Discos de corte"
         subtitle="Una familia protagonista"
-        items={discs}
-        to={catalogHref({ category: 'discos' })}
+        items={mode === 'demo' ? discs : discs.slice(0, 8)}
+        to={discsLink}
       />
-      <section className="sf-brand-section" aria-label="Explorar por marca">
-        <div>
-          <h2>Tus marcas, más cerca</h2>
-          <p>Explora nuestro catálogo por marca.</p>
-        </div>
-        <div className="sf-brand-grid">
-          {brands.map((b) => (
-            <Link
-              to={catalogHref({ brand: b })}
-              key={b}
-              aria-label={`Explorar productos de ${b}`}
-              title={b}
-            >
-              {brandLogos[b] ? (
-                <img
-                  className="sf-official-brand-logo"
-                  src={brandLogos[b]}
-                  alt={b}
-                  width="850"
-                  height="567"
-                  loading="lazy"
-                />
-              ) : (
-                <strong>{b}</strong>
-              )}
-              <Icon name="arrow" />
-            </Link>
-          ))}
-        </div>
-      </section>
+      {brands.length > 0 && (
+        <section className="sf-brand-section" aria-label="Explorar por marca">
+          <div>
+            <h2>Tus marcas, más cerca</h2>
+            <p>Explora nuestro catálogo por marca.</p>
+          </div>
+          <div className="sf-brand-grid">
+            {brands.map((b) => (
+              <Link
+                to={catalogHref({ brand: b })}
+                key={b}
+                aria-label={`Explorar productos de ${b}`}
+                title={b}
+              >
+                {brandLogos[b] ? (
+                  <img
+                    className="sf-official-brand-logo"
+                    src={brandLogos[b]}
+                    alt={b}
+                    width="850"
+                    height="567"
+                    loading="lazy"
+                  />
+                ) : (
+                  <strong>{b}</strong>
+                )}
+                <Icon name="arrow" />
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
       <Shelf
         id="featured-title"
         title="Destacados para tu proyecto"
-        subtitle="Productos de referencia"
-        items={featured}
+        subtitle={
+          mode === 'demo' ? 'Productos de referencia' : 'Catálogo conectado'
+        }
+        items={mode === 'demo' ? featured : featured.slice(0, 8)}
         to="/catalogo?orden=featured"
       />
       <Shelf
         id="volume-title"
         title="Explora la compra por volumen"
-        subtitle="Prueba el carrito con estos ejemplos"
-        items={volume}
+        subtitle={
+          mode === 'demo'
+            ? 'Prueba el carrito con estos ejemplos'
+            : 'Presentaciones con precios por cantidad'
+        }
+        items={mode === 'demo' ? volume : volume.slice(0, 4)}
         to={catalogHref({ wholesale: true })}
       />
       <section className="sf-offers-ready" aria-labelledby="offers-heading">

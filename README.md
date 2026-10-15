@@ -61,3 +61,9 @@ git status --short
 ```
 
 Si existe otro error (red/permisos), resolverlo antes de crear. No configurar workflows de despliegue. El commit local de esta etapa debe existir antes de `--push`.
+
+## Integración local del storefront premium
+
+La rama `feature/storefront-supabase-integration` conserva el storefront y conecta el catálogo y la administración al entorno Supabase local aislado. Sin configuración utiliza demo explícita; la administración queda inhabilitada. Un fallo real nunca se sustituye por datos ficticios.
+
+Consulta [diagnóstico, contratos, pruebas, entornos y recuperación](docs/19_INTEGRACION_STOREFRONT_SUPABASE.md). Las credenciales locales son privadas e ignoradas por Git. No se habilitaron pagos ni checkout real.

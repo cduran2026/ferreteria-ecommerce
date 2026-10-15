@@ -1,4 +1,4 @@
-import type { Product } from '../types/catalog'
+import type { Product, Category } from '../types/catalog'
 import { categoryContains } from './catalogTaxonomy'
 import { availability, tiersFor } from './demoCommerce'
 export type CatalogSort =
@@ -19,7 +19,11 @@ const normalized = (s: string) =>
     .replace(/[\u0300-\u036f]/g, '')
     .toLocaleLowerCase('es-CL')
     .trim()
-export function queryCatalog(products: Product[], filters: CatalogFilters) {
+export function queryCatalog(
+  products: Product[],
+  filters: CatalogFilters,
+  tree?: Category[],
+) {
   const q = normalized(filters.query ?? '')
   const found = products.filter((p) => {
     const price = p.presentations[0]?.price ?? null
@@ -28,7 +32,7 @@ export function queryCatalog(products: Product[], filters: CatalogFilters) {
         q,
       ) &&
       (!filters.category ||
-        categoryContains(filters.category, p.categoryId) ||
+        categoryContains(filters.category, p.categoryId, tree) ||
         p.category === filters.category) &&
       (!filters.brand || p.brand === filters.brand) &&
       (filters.min === undefined || (price !== null && price >= filters.min)) &&

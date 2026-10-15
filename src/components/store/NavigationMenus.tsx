@@ -1,13 +1,10 @@
+import { useCatalog } from '../../features/catalog/context'
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import {
-  brands,
-  rootCategories,
-  categoryTree,
-  catalogHref,
-} from '../../services/catalogTaxonomy'
+import { catalogHref } from '../../services/catalogTaxonomy'
 import { Icon } from './Icon'
 export function NavigationMenus() {
+  const { categoryTree, rootCategories, brands } = useCatalog()
   const categoryRef = useRef<HTMLDetailsElement>(null),
     brandRef = useRef<HTMLDetailsElement>(null)
   const close = () => {

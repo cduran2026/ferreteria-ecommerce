@@ -79,13 +79,17 @@ export const categoryTree: Category[] = [
   },
 ]
 export const rootCategories = categoryTree.filter((c) => !c.parent_id)
-export function categoryContains(selected: string, target?: string) {
-  let current = categoryTree.find((c) => c.id === target)
+export function categoryContains(
+  selected: string,
+  target?: string,
+  tree: Category[] = categoryTree,
+) {
+  let current = tree.find((c) => c.id === target)
   const seen = new Set<string>()
   while (current && !seen.has(current.id)) {
     if (current.id === selected) return true
     seen.add(current.id)
-    current = categoryTree.find((c) => c.id === current!.parent_id)
+    current = tree.find((c) => c.id === current!.parent_id)
   }
   return false
 }

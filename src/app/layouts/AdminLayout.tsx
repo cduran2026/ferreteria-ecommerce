@@ -6,7 +6,11 @@ export function AdminLayout() {
     ? 'Inventario'
     : location.pathname.includes('modulo')
       ? decodeURIComponent(location.pathname.split('/').pop() ?? '')
-      : 'Dashboard'
+      : location.pathname.includes('productos')
+        ? 'Productos'
+        : location.pathname.includes('categorias')
+          ? 'Categorías'
+          : 'Dashboard'
   return (
     <div className="admin-shell">
       <a href="#admin-main" className="skip">
@@ -17,8 +21,8 @@ export function AdminLayout() {
         <Header title={title} />
         <main id="admin-main" className="admin-content">
           <div className="notice">
-            Entorno demostrativo público. No contiene información administrativa
-            real.
+            Entorno local autenticado. Datos de desarrollo; sin operaciones
+            comerciales habilitadas.
           </div>
           <Outlet />
         </main>

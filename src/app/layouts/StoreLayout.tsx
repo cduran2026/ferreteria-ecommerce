@@ -1,3 +1,5 @@
+import { CatalogProvider, CatalogGate } from '../../features/catalog/Provider'
+import { useCatalog } from '../../features/catalog/context'
 import { CartFeedback } from '../../features/cart/CartFeedback'
 import { StoreAssistant } from '../../components/store/assistant/StoreAssistant'
 import { NavigationMenus } from '../../components/store/NavigationMenus'
@@ -8,6 +10,8 @@ import { Icon } from '../../components/store/Icon'
 import { CartProvider } from '../../features/cart/Provider'
 import { useCart } from '../../features/cart/useCart'
 function Header() {
+  const { mode, categoryTree } = useCatalog()
+  const discsId = categoryTree.find((c) => c.slug === 'discos-de-corte')?.id
   const { lines, message } = useCart()
 
   const count = lines.reduce((n, l) => n + l.quantity, 0)
@@ -15,7 +19,9 @@ function Header() {
     <>
       <div className="sf-demo-bar">
         <span className="sf-demo-dot" />
-        Tienda demo · Sin pagos ni pedidos reales
+        {mode === 'demo'
+          ? 'Tienda demo · Sin pagos ni pedidos reales'
+          : 'Catálogo conectado · Sin pagos ni pedidos reales'}
       </div>
       <header className="sf-header">
         <div className="sf-container sf-header-main">
@@ -52,7 +58,7 @@ function Header() {
             <Link
               className="sf-cart-link"
               to="/carrito"
-              aria-label={`Carrito de demostración, ${count} presentaciones`}
+              aria-label={`Carrito${mode === 'demo' ? ' de demostración' : ''}, ${count} presentaciones`}
             >
               <Icon name="cart" />
               <span>Carrito</span>
@@ -68,8 +74,8 @@ function Header() {
                 Inicio
               </NavLink>
               <NavLink to="/catalogo">Todos los productos</NavLink>
-              <Link to={catalogHref({ category: 'discos' })}>
-                Discos de corte
+              <Link to={catalogHref({ category: discsId })}>
+                {discsId ? 'Discos de corte' : 'Catálogo'}
               </Link>
               <Link to={catalogHref({ wholesale: true })}>Por volumen</Link>
             </nav>
@@ -86,6 +92,14 @@ function Header() {
 }
 export function StoreLayout() {
   return (
+    <CatalogProvider>
+      <StoreContent />
+    </CatalogProvider>
+  )
+}
+function StoreContent() {
+  const { mode } = useCatalog()
+  return (
     <CartProvider>
       <div className="storefront">
         <a href="#main" className="skip">
@@ -93,7 +107,9 @@ export function StoreLayout() {
         </a>
         <Header />
         <main id="main" tabIndex={-1}>
-          <Outlet />
+          <CatalogGate>
+            <Outlet />
+          </CatalogGate>
         </main>
         <footer className="sf-footer">
           <div className="sf-container sf-footer-grid">
@@ -116,16 +132,22 @@ export function StoreLayout() {
               <h3>Explora</h3>
               <Link to="/catalogo">Todos los productos</Link>
               <Link to="/catalogo?mayorista=1">Compra por volumen</Link>
-              <Link to="/carrito">Carrito de demostración</Link>
+              <Link to="/carrito">
+                {mode === 'demo'
+                  ? 'Carrito de demostración'
+                  : 'Carrito de revisión'}
+              </Link>
             </div>
             <div>
               <h3>Sobre esta tienda</h3>
               <p>
-                Catálogo de referencia y ejemplos demostrativos.
+                {mode === 'demo'
+                  ? 'Catálogo de referencia y ejemplos demostrativos.'
+                  : 'Catálogo conectado a Supabase local.'}
                 <br />
                 Sin pagos, pedidos ni despacho habilitados.
               </p>
-              <Link to="/admin">Administración demo ↗</Link>
+              <Link to="/admin">Administración ↗</Link>
             </div>
           </div>
           <div className="sf-container sf-footer-bottom">
